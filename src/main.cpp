@@ -15,8 +15,10 @@ int main(int argc, char *argv[])
     a.setOrganizationName("deepin en español");
 
     QTranslator appTranslator;
-    appTranslator.load(QLocale(), QLatin1String("tetris"), QLatin1String("_"),
-                       QLatin1String(":/translations/"));
+    QString locale = QLocale::system().name();
+    [[maybe_unused]] bool loaded = appTranslator.load(
+        QLatin1String("tetris_") + locale.left(2),
+        QLatin1String(":/translations/"));
     a.installTranslator(&appTranslator);
     a.setProductIcon(QIcon(":/icons/tetris-deepin.svg"));
     a.setWindowIcon(QIcon(":/icons/tetris-deepin.svg"));

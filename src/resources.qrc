@@ -2,5 +2,13 @@
     <qresource prefix="/">
         <file>icons/tetris-deepin.svg</file>
         <file>icons/Logo-Racoon.png</file>
+        <file>translations/tetris_de.qm</file>
+        <file>translations/tetris_es.qm</file>
+        <file>translations/tetris_fr.qm</file>
+        <file>translations/tetris_it.qm</file>
+        <file>translations/tetris_pt.qm</file>
+        <file>translations/tetris_ru.qm</file>
+        <file>translations/tetris_uk.qm</file>
+        <file>translations/tetris_zh.qm</file>
     </qresource>
 </RCC>
