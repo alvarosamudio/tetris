@@ -31,6 +31,8 @@ private slots:
   void updateLines(int lines);
   void updateNextPiece(const Tetromino &piece);
   void onGameOver(int score);
+  void onGamePaused();
+  void onGameResumed();
 
 private:
   void loadHighScore();

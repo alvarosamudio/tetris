@@ -55,6 +55,8 @@ Widget::Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Widget), m_muted(f
   connect(m_gameBoard, &GameBoard::pieceDropped, m_soundManager, &SoundManager::playDrop);
   connect(m_gameBoard, &GameBoard::linesCleared, m_soundManager, &SoundManager::playLineClear);
   connect(m_gameBoard, &GameBoard::gameOver, m_soundManager, [this](int) { m_soundManager->playGameOver(); });
+  connect(m_gameBoard, &GameBoard::gamePaused, this, &Widget::onGamePaused);
+  connect(m_gameBoard, &GameBoard::gameResumed, this, &Widget::onGameResumed);
 
   connect(ui->startBtn, &QPushButton::clicked, this, &Widget::onStartClicked);
   connect(ui->pauseBtn, &QPushButton::clicked, this, &Widget::onPauseClicked);
@@ -138,11 +140,19 @@ void Widget::updateNextPiece(const Tetromino &piece) {
 void Widget::onPauseClicked() {
   if (m_gameBoard->getGame().isPaused()) {
     m_gameBoard->resumeGame();
-    ui->pauseBtn->setText(tr("Pause"));
   } else {
     m_gameBoard->pauseGame();
-    ui->pauseBtn->setText(tr("Resume"));
   }
+}
+
+void Widget::onGamePaused() {
+  ui->pauseBtn->setText(tr("Resume"));
+  m_soundManager->pauseMusic();
+}
+
+void Widget::onGameResumed() {
+  ui->pauseBtn->setText(tr("Pause"));
+  m_soundManager->resumeMusic();
 }
 
 void Widget::onMuteClicked() {

@@ -39,12 +39,14 @@ void GameBoard::startGame() {
 void GameBoard::pauseGame() {
   game.setPaused(true);
   timer->stop();
+  emit gamePaused();
   update();
 }
 
 void GameBoard::resumeGame() {
   game.setPaused(false);
   timer->start(game.getTickInterval());
+  emit gameResumed();
   update();
 }
 
