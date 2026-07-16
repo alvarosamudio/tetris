@@ -156,8 +156,10 @@ void SoundManager::buildMelody() {
 SoundManager::SoundManager(QObject *parent)
     : QObject(parent), m_muted(false) {
 
-  // Sound effects - classic 8-bit style
-  // Rotate: quick high beep
+  m_audioFormat.setSampleRate(44100);
+  m_audioFormat.setChannelCount(1);
+  m_audioFormat.setSampleFormat(QAudioFormat::Int16);
+
   auto setupSink = [this](QByteArray &data, QBuffer *&buffer, QAudioSink *&sink, float defaultVolume) {
     buffer = new QBuffer(&data, this);
     buffer->open(QIODevice::ReadOnly);
@@ -165,7 +167,8 @@ SoundManager::SoundManager(QObject *parent)
     sink->setVolume(defaultVolume);
   };
 
-  // Sound effects
+  // Sound effects - classic 8-bit style
+  // Rotate: quick high beep
   m_rotateData = squareWave(880, 44100 * 40 / 1000, 44100);
   setupSink(m_rotateData, m_rotateBuffer, m_rotateSink, 0.3f);
 
@@ -192,6 +195,13 @@ SoundManager::SoundManager(QObject *parent)
 
   buildMelody();
   setupSink(m_musicData, m_musicBuffer, m_musicSink, 0.2f);
+  
+  connect(m_musicSink, &QAudioSink::stateChanged, this, [this](QAudio::State state) {
+      if (state == QAudio::IdleState && !m_muted) {
+          m_musicBuffer->seek(0);
+          m_musicSink->start(m_musicBuffer);
+      }
+  });
 }
 
 void SoundManager::playRotate() {
