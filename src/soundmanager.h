@@ -6,6 +6,9 @@
 #include <QBuffer>
 #include <QAudioSink>
 #include <QAudioFormat>
+#include <QIODevice>
+
+class AudioStreamer;
 
 class SoundManager : public QObject {
   Q_OBJECT
@@ -19,28 +22,30 @@ public:
   void setMuted(bool muted);
   void startMusic();
   void stopMusic();
+  void pauseMusic();
+  void resumeMusic();
 
 private:
   QAudioFormat m_audioFormat;
 
   QByteArray m_rotateData;
-  QBuffer *m_rotateBuffer;
+  AudioStreamer *m_rotateStreamer;
   QAudioSink *m_rotateSink;
 
   QByteArray m_dropData;
-  QBuffer *m_dropBuffer;
+  AudioStreamer *m_dropStreamer;
   QAudioSink *m_dropSink;
 
   QByteArray m_lineClearData;
-  QBuffer *m_lineClearBuffer;
+  AudioStreamer *m_lineClearStreamer;
   QAudioSink *m_lineClearSink;
 
   QByteArray m_gameOverData;
-  QBuffer *m_gameOverBuffer;
+  AudioStreamer *m_gameOverStreamer;
   QAudioSink *m_gameOverSink;
 
   QByteArray m_musicData;
-  QBuffer *m_musicBuffer;
+  AudioStreamer *m_musicStreamer;
   QAudioSink *m_musicSink;
 
   bool m_muted;

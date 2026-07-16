@@ -2,8 +2,60 @@
 #include <QBuffer>
 #include <QtEndian>
 #include <cmath>
+#include <cstring>
 
 static const double REST = 0.0;
+
+struct AudioStreamer : public QIODevice {
+    const QByteArray &m_data;
+    qint64 m_pos = 0;
+    bool m_playing = false;
+    bool m_muted = false;
+    bool m_looping = false;
+
+    AudioStreamer(const QByteArray &data, bool looping, QObject *parent = nullptr) 
+        : QIODevice(parent), m_data(data), m_looping(looping) { open(ReadOnly); }
+
+    void setPlaying(bool p) { m_playing = p; }
+    void setMuted(bool m) { m_muted = m; }
+    void seekToStart() { m_pos = 0; }
+
+    qint64 readData(char *data, qint64 maxlen) override {
+        if (!m_playing || m_data.isEmpty()) {
+            memset(data, 0, maxlen);
+            return maxlen;
+        }
+        
+        qint64 bytesRead = 0;
+        while (bytesRead < maxlen) {
+            qint64 chunk = qMin(maxlen - bytesRead, (qint64)m_data.size() - m_pos);
+            if (chunk == 0) break;
+            
+            if (m_muted) {
+                memset(data + bytesRead, 0, chunk);
+            } else {
+                memcpy(data + bytesRead, m_data.constData() + m_pos, chunk);
+            }
+            
+            m_pos = (m_pos + chunk);
+            if (m_pos >= m_data.size()) {
+                if (m_looping) {
+                    m_pos = 0;
+                } else {
+                    m_playing = false;
+                    memset(data + bytesRead + chunk, 0, maxlen - (bytesRead + chunk));
+                    return maxlen;
+                }
+            }
+            bytesRead += chunk;
+        }
+        return maxlen;
+    }
+    qint64 writeData(const char *, qint64) override { return 0; }
+    bool isSequential() const override { return true; }
+    qint64 bytesAvailable() const override { return m_data.size() + QIODevice::bytesAvailable(); }
+    bool atEnd() const override { return false; }
+};
 
 // Note frequencies (Hz)
 static const double NOTE_C4 = 261.63, NOTE_D4 = 293.66, NOTE_E4 = 329.63;
@@ -160,22 +212,25 @@ SoundManager::SoundManager(QObject *parent)
   m_audioFormat.setChannelCount(1);
   m_audioFormat.setSampleFormat(QAudioFormat::Int16);
 
-  auto setupSink = [this](QByteArray &data, QBuffer *&buffer, QAudioSink *&sink, float defaultVolume) {
-    buffer = new QBuffer(&data, this);
-    buffer->open(QIODevice::ReadOnly);
+  int bufferSize = 44100 * 2 * 1 * 50 / 1000; // 50ms buffer for low latency
+
+  auto setupSink = [this, bufferSize](QByteArray &data, AudioStreamer *&streamer, QAudioSink *&sink, float defaultVolume) {
+    streamer = new AudioStreamer(data, false, this);
     sink = new QAudioSink(m_audioFormat, this);
+    sink->setBufferSize(bufferSize);
     sink->setVolume(defaultVolume);
+    sink->start(streamer);
   };
 
   // Sound effects - classic 8-bit style
   // Rotate: quick high beep
   m_rotateData = squareWave(880, 44100 * 40 / 1000, 44100);
-  setupSink(m_rotateData, m_rotateBuffer, m_rotateSink, 0.3f);
+  setupSink(m_rotateData, m_rotateStreamer, m_rotateSink, 0.3f);
 
   // Drop: low thud
   m_dropData = squareWave(150, 44100 * 30 / 1000, 44100);
   m_dropData.append(squareWave(100, 44100 * 70 / 1000, 44100));
-  setupSink(m_dropData, m_dropBuffer, m_dropSink, 0.3f);
+  setupSink(m_dropData, m_dropStreamer, m_dropSink, 0.3f);
 
   // Line clear: ascending arpeggio
   int q = 44100 * 60 / 1000;
@@ -183,7 +238,7 @@ SoundManager::SoundManager(QObject *parent)
   m_lineClearData.append(squareWave(659, q, 44100));
   m_lineClearData.append(squareWave(784, q, 44100));
   m_lineClearData.append(squareWave(1047, q * 2, 44100));
-  setupSink(m_lineClearData, m_lineClearBuffer, m_lineClearSink, 0.3f);
+  setupSink(m_lineClearData, m_lineClearStreamer, m_lineClearSink, 0.3f);
 
   // Game over: descending sad notes
   int n = 44100 * 200 / 1000;
@@ -191,64 +246,88 @@ SoundManager::SoundManager(QObject *parent)
   m_gameOverData.append(squareWave(370, n, 44100));
   m_gameOverData.append(squareWave(311, n, 44100));
   m_gameOverData.append(squareWave(262, n * 3, 44100));
-  setupSink(m_gameOverData, m_gameOverBuffer, m_gameOverSink, 0.3f);
+  setupSink(m_gameOverData, m_gameOverStreamer, m_gameOverSink, 0.3f);
 
   buildMelody();
-  setupSink(m_musicData, m_musicBuffer, m_musicSink, 0.2f);
-  
-  connect(m_musicSink, &QAudioSink::stateChanged, this, [this](QAudio::State state) {
-      if (state == QAudio::IdleState && !m_muted) {
-          m_musicBuffer->seek(0);
-          m_musicSink->start(m_musicBuffer);
-      }
-  });
+  m_musicStreamer = new AudioStreamer(m_musicData, true, this);
+  m_musicSink = new QAudioSink(m_audioFormat, this);
+  m_musicSink->setBufferSize(bufferSize);
+  m_musicSink->setVolume(0.2f);
+  m_musicSink->start(m_musicStreamer);
 }
 
 void SoundManager::playRotate() {
   if (m_muted) return;
-  m_rotateSink->stop();
-  m_rotateBuffer->seek(0);
-  m_rotateSink->start(m_rotateBuffer);
+  m_rotateStreamer->seekToStart();
+  m_rotateStreamer->setPlaying(true);
 }
 
 void SoundManager::playDrop() {
   if (m_muted) return;
-  m_dropSink->stop();
-  m_dropBuffer->seek(0);
-  m_dropSink->start(m_dropBuffer);
+  m_dropStreamer->seekToStart();
+  m_dropStreamer->setPlaying(true);
 }
 
 void SoundManager::playLineClear() {
   if (m_muted) return;
-  m_lineClearSink->stop();
-  m_lineClearBuffer->seek(0);
-  m_lineClearSink->start(m_lineClearBuffer);
+  m_lineClearStreamer->seekToStart();
+  m_lineClearStreamer->setPlaying(true);
 }
 
 void SoundManager::playGameOver() {
   stopMusic();
   if (m_muted) return;
-  m_gameOverSink->stop();
-  m_gameOverBuffer->seek(0);
-  m_gameOverSink->start(m_gameOverBuffer);
+  m_gameOverStreamer->seekToStart();
+  m_gameOverStreamer->setPlaying(true);
 }
 
 void SoundManager::setMuted(bool muted) {
   m_muted = muted;
+  if (muted) {
+    if (m_rotateStreamer) m_rotateStreamer->setPlaying(false);
+    if (m_dropStreamer) m_dropStreamer->setPlaying(false);
+    if (m_lineClearStreamer) m_lineClearStreamer->setPlaying(false);
+    if (m_gameOverStreamer) m_gameOverStreamer->setPlaying(false);
+  }
   float vol = muted ? 0.0f : 0.3f;
   m_rotateSink->setVolume(vol);
   m_dropSink->setVolume(vol);
   m_lineClearSink->setVolume(vol);
   m_gameOverSink->setVolume(vol);
-  m_musicSink->setVolume(muted ? 0.0f : 0.2f);
+  
+  if (m_musicStreamer) {
+    m_musicStreamer->setMuted(muted);
+  }
+  if (m_musicSink) {
+    m_musicSink->setVolume(muted ? 0.0f : 0.2f);
+  }
 }
 
 void SoundManager::startMusic() {
-  m_musicSink->stop();
-  m_musicBuffer->seek(0);
-  m_musicSink->start(m_musicBuffer);
+  m_musicStreamer->seekToStart();
+  m_musicStreamer->setPlaying(true);
 }
 
 void SoundManager::stopMusic() {
-  m_musicSink->stop();
+  if (m_musicStreamer) {
+    m_musicStreamer->setPlaying(false);
+  }
+}
+
+void SoundManager::pauseMusic() {
+  if (m_musicStreamer) {
+    m_musicStreamer->setPlaying(false);
+  }
+  if (m_musicSink) {
+    m_musicSink->setVolume(0.0f);
+  }
+}
+
+void SoundManager::resumeMusic() {
+  if (m_musicStreamer) {
+    m_musicStreamer->setPlaying(true);
+  }
+  if (m_musicSink) {
+    m_musicSink->setVolume(m_muted ? 0.0f : 0.2f);
+  }
 }

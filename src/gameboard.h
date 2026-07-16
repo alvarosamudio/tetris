@@ -23,6 +23,8 @@ signals:
   void levelChanged(int level);
   void linesChanged(int lines);
   void linesCleared(int count);
+  void gamePaused();
+  void gameResumed();
   void pieceDropped();
   void pieceRotated();
   void nextPieceChanged(const Tetromino &piece);
