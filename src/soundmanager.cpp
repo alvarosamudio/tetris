@@ -306,6 +306,9 @@ void SoundManager::setMuted(bool muted) {
 void SoundManager::startMusic() {
   m_musicStreamer->seekToStart();
   m_musicStreamer->setPlaying(true);
+  if (m_musicSink) {
+    m_musicSink->setVolume(m_muted ? 0.0f : 0.2f);
+  }
 }
 
 void SoundManager::stopMusic() {
