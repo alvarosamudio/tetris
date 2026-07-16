@@ -2,10 +2,10 @@
 #define SOUNDMANAGER_H
 
 #include <QObject>
-#include <QSoundEffect>
-#include <QTimer>
-#include <QUrl>
-#include <QVector>
+#include <QByteArray>
+#include <QBuffer>
+#include <QAudioSink>
+#include <QAudioFormat>
 
 class SoundManager : public QObject {
   Q_OBJECT
@@ -21,24 +21,36 @@ public:
   void stopMusic();
 
 private:
-  QSoundEffect *m_rotate;
-  QSoundEffect *m_drop;
-  QSoundEffect *m_lineClear;
-  QSoundEffect *m_gameOver;
+  QAudioFormat m_audioFormat;
 
-  QTimer *m_musicTimer;
+  QByteArray m_rotateData;
+  QBuffer *m_rotateBuffer;
+  QAudioSink *m_rotateSink;
+
+  QByteArray m_dropData;
+  QBuffer *m_dropBuffer;
+  QAudioSink *m_dropSink;
+
+  QByteArray m_lineClearData;
+  QBuffer *m_lineClearBuffer;
+  QAudioSink *m_lineClearSink;
+
+  QByteArray m_gameOverData;
+  QBuffer *m_gameOverBuffer;
+  QAudioSink *m_gameOverSink;
+
+  QByteArray m_musicData;
+  QBuffer *m_musicBuffer;
+  QAudioSink *m_musicSink;
+
   bool m_muted;
-  int m_noteIndex;
 
   struct MusicNote {
     double freq;
     int durationMs;
     MusicNote(double f, int d) : freq(f), durationMs(d) {}
   };
-  QVector<MusicNote> m_melody;
-  QVector<MusicNote> m_bass;
   void buildMelody();
-  void playNextNote();
 };
 
 #endif // SOUNDMANAGER_H

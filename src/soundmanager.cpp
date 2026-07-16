@@ -1,8 +1,5 @@
 #include "soundmanager.h"
 #include <QBuffer>
-#include <QDataStream>
-#include <QDir>
-#include <QTemporaryFile>
 #include <QtEndian>
 #include <cmath>
 
@@ -40,62 +37,12 @@ static QByteArray squareWave(double freq, int numSamples, int sampleRate) {
   return pcm;
 }
 
-static QByteArray buildWav(const QByteArray &pcmData, int sampleRate = 44100) {
-  QByteArray wav;
-  QDataStream stream(&wav, QIODevice::WriteOnly);
-  stream.setByteOrder(QDataStream::LittleEndian);
-  stream << QByteArray("RIFF");
-  stream << quint32(36 + pcmData.size());
-  stream << QByteArray("WAVE");
-  stream << QByteArray("fmt ");
-  stream << quint32(16);
-  stream << quint16(1); // PCM
-  stream << quint16(1); // mono
-  stream << quint32(sampleRate);
-  stream << quint32(sampleRate * 2);
-  stream << quint16(2);
-  stream << quint16(16);
-  stream << QByteArray("data");
-  stream << quint32(pcmData.size());
-  stream.writeRawData(pcmData.constData(), pcmData.size());
-  return wav;
-}
-
-static QSoundEffect *loadFromWav(const QByteArray &wavData) {
-  QSoundEffect *effect = new QSoundEffect();
-  QTemporaryFile tmpFile(QDir::tempPath() + "/tetris_sfx_XXXXXX.wav");
-  tmpFile.setAutoRemove(false);
-  if (tmpFile.open()) {
-    tmpFile.write(wavData);
-    tmpFile.close();
-    effect->setSource(QUrl::fromLocalFile(tmpFile.fileName()));
-  }
-  return effect;
-}
-
-// Build a melody from note sequence {freq, durationMs}
-static QByteArray buildMelodyWav(const QVector<QPair<double, int>> &notes, int sampleRate = 44100) {
-  QByteArray allPcm;
-  for (const auto &note : notes) {
-    if (note.first > 0) {
-      int samples = sampleRate * note.second / 1000;
-      allPcm.append(squareWave(note.first, samples, sampleRate));
-    } else {
-      // Rest
-      int samples = sampleRate * note.second / 1000;
-      QByteArray silence(samples * 2, 0);
-      allPcm.append(silence);
-    }
-  }
-  return buildWav(allPcm, sampleRate);
-}
-
 void SoundManager::buildMelody() {
   // Korobeiniki (Tetris Theme A) - classic 8-bit arrangement
   // Quarter note = 200ms, eighth = 100ms, half = 400ms, whole = 800ms
   int q = 200, e = 100, h = 400, w = 800, dq = 300;
 
-  m_melody = {
+  QVector<MusicNote> melody = {
     // Line 1
     {NOTE_E5, q}, {NOTE_B4, e}, {NOTE_C5, e}, {NOTE_D5, q}, {NOTE_C5, e}, {NOTE_B4, e},
     {NOTE_A4, q}, {NOTE_A4, e}, {NOTE_C5, e}, {NOTE_E5, q}, {NOTE_D5, e}, {NOTE_C5, e},
@@ -133,7 +80,7 @@ void SoundManager::buildMelody() {
   };
 
   // Simple bass line following the melody
-  m_bass = {
+  QVector<MusicNote> bass = {
     {NOTE_E3, q}, {NOTE_E3, e}, {NOTE_E3, e}, {NOTE_E3, q}, {NOTE_E3, e}, {NOTE_E3, e},
     {NOTE_A3, q}, {NOTE_A3, e}, {NOTE_A3, e}, {NOTE_A3, q}, {NOTE_A3, e}, {NOTE_A3, e},
     {NOTE_GS3, dq}, {NOTE_GS3, e}, {NOTE_GS3, q}, {NOTE_GS3, q},
@@ -164,124 +111,138 @@ void SoundManager::buildMelody() {
     {REST, e}, {NOTE_G3, q}, {NOTE_G3, e}, {NOTE_G3, q}, {NOTE_G3, q},
     {REST, e}, {NOTE_A3, q}, {NOTE_A3, e}, {NOTE_A3, q}, {REST, q},
   };
+
+  QByteArray melodyData;
+  for (const auto& note : melody) {
+      if (note.freq > 0) {
+          QByteArray p = squareWave(note.freq, 44100 * note.durationMs / 1000 * 80 / 100, 44100);
+          melodyData.append(p);
+          int restSamples = 44100 * note.durationMs / 1000 * 20 / 100;
+          if (restSamples > 0) {
+            melodyData.append(QByteArray(restSamples * 2, 0));
+          }
+      } else {
+          int samples = 44100 * note.durationMs / 1000;
+          melodyData.append(QByteArray(samples * 2, 0));
+      }
+  }
+  
+  QByteArray bassData;
+  for (const auto& note : bass) {
+      if (note.freq > 0) {
+          QByteArray p = squareWave(note.freq, 44100 * note.durationMs / 1000 * 80 / 100, 44100);
+          bassData.append(p);
+          int restSamples = 44100 * note.durationMs / 1000 * 20 / 100;
+          if (restSamples > 0) {
+            bassData.append(QByteArray(restSamples * 2, 0));
+          }
+      } else {
+          int samples = 44100 * note.durationMs / 1000;
+          bassData.append(QByteArray(samples * 2, 0));
+      }
+  }
+  
+  int minSize = qMin(melodyData.size(), bassData.size()) / 2;
+  m_musicData.resize(minSize * 2);
+  const qint16* m = reinterpret_cast<const qint16*>(melodyData.constData());
+  const qint16* b = reinterpret_cast<const qint16*>(bassData.constData());
+  qint16* out = reinterpret_cast<qint16*>(m_musicData.data());
+  
+  for (int i = 0; i < minSize; ++i) {
+      out[i] = static_cast<qint16>((m[i] * 0.6) + (b[i] * 0.4));
+  }
 }
 
 SoundManager::SoundManager(QObject *parent)
-    : QObject(parent), m_muted(false), m_noteIndex(0) {
+    : QObject(parent), m_muted(false) {
+
   // Sound effects - classic 8-bit style
   // Rotate: quick high beep
-  {
-    QByteArray pcm;
-    int samples = 44100 * 40 / 1000;
-    pcm.append(squareWave(880, samples, 44100));
-    m_rotate = loadFromWav(buildWav(pcm));
-  }
+  auto setupSink = [this](QByteArray &data, QBuffer *&buffer, QAudioSink *&sink, float defaultVolume) {
+    buffer = new QBuffer(&data, this);
+    buffer->open(QIODevice::ReadOnly);
+    sink = new QAudioSink(m_audioFormat, this);
+    sink->setVolume(defaultVolume);
+  };
+
+  // Sound effects
+  m_rotateData = squareWave(880, 44100 * 40 / 1000, 44100);
+  setupSink(m_rotateData, m_rotateBuffer, m_rotateSink, 0.3f);
+
   // Drop: low thud
-  {
-    QByteArray pcm;
-    pcm.append(squareWave(150, 44100 * 30 / 1000, 44100));
-    pcm.append(squareWave(100, 44100 * 70 / 1000, 44100));
-    m_drop = loadFromWav(buildWav(pcm));
-  }
+  m_dropData = squareWave(150, 44100 * 30 / 1000, 44100);
+  m_dropData.append(squareWave(100, 44100 * 70 / 1000, 44100));
+  setupSink(m_dropData, m_dropBuffer, m_dropSink, 0.3f);
+
   // Line clear: ascending arpeggio
-  {
-    QByteArray pcm;
-    int q = 44100 * 60 / 1000;
-    pcm.append(squareWave(523, q, 44100));
-    pcm.append(squareWave(659, q, 44100));
-    pcm.append(squareWave(784, q, 44100));
-    pcm.append(squareWave(1047, q * 2, 44100));
-    m_lineClear = loadFromWav(buildWav(pcm));
-  }
+  int q = 44100 * 60 / 1000;
+  m_lineClearData = squareWave(523, q, 44100);
+  m_lineClearData.append(squareWave(659, q, 44100));
+  m_lineClearData.append(squareWave(784, q, 44100));
+  m_lineClearData.append(squareWave(1047, q * 2, 44100));
+  setupSink(m_lineClearData, m_lineClearBuffer, m_lineClearSink, 0.3f);
+
   // Game over: descending sad notes
-  {
-    QByteArray pcm;
-    int n = 44100 * 200 / 1000;
-    pcm.append(squareWave(440, n, 44100));
-    pcm.append(squareWave(370, n, 44100));
-    pcm.append(squareWave(311, n, 44100));
-    pcm.append(squareWave(262, n * 3, 44100));
-    m_gameOver = loadFromWav(buildWav(pcm));
-  }
+  int n = 44100 * 200 / 1000;
+  m_gameOverData = squareWave(440, n, 44100);
+  m_gameOverData.append(squareWave(370, n, 44100));
+  m_gameOverData.append(squareWave(311, n, 44100));
+  m_gameOverData.append(squareWave(262, n * 3, 44100));
+  setupSink(m_gameOverData, m_gameOverBuffer, m_gameOverSink, 0.3f);
 
   buildMelody();
-
-  m_musicTimer = new QTimer(this);
-  connect(m_musicTimer, &QTimer::timeout, this, &SoundManager::playNextNote);
+  setupSink(m_musicData, m_musicBuffer, m_musicSink, 0.2f);
 }
 
 void SoundManager::playRotate() {
-  if (!m_muted && m_rotate && m_rotate->status() != QSoundEffect::Loading)
-    m_rotate->play();
+  if (m_muted) return;
+  m_rotateSink->stop();
+  m_rotateBuffer->seek(0);
+  m_rotateSink->start(m_rotateBuffer);
 }
 
 void SoundManager::playDrop() {
-  if (!m_muted && m_drop && m_drop->status() != QSoundEffect::Loading)
-    m_drop->play();
+  if (m_muted) return;
+  m_dropSink->stop();
+  m_dropBuffer->seek(0);
+  m_dropSink->start(m_dropBuffer);
 }
 
 void SoundManager::playLineClear() {
-  if (!m_muted && m_lineClear && m_lineClear->status() != QSoundEffect::Loading)
-    m_lineClear->play();
+  if (m_muted) return;
+  m_lineClearSink->stop();
+  m_lineClearBuffer->seek(0);
+  m_lineClearSink->start(m_lineClearBuffer);
 }
 
 void SoundManager::playGameOver() {
   stopMusic();
-  if (!m_muted && m_gameOver && m_gameOver->status() != QSoundEffect::Loading)
-    m_gameOver->play();
+  if (m_muted) return;
+  m_gameOverSink->stop();
+  m_gameOverBuffer->seek(0);
+  m_gameOverSink->start(m_gameOverBuffer);
 }
 
 void SoundManager::setMuted(bool muted) {
   m_muted = muted;
-  float vol = muted ? 0.0f : 1.0f;
-  if (m_rotate) m_rotate->setVolume(vol);
-  if (m_drop) m_drop->setVolume(vol);
-  if (m_lineClear) m_lineClear->setVolume(vol);
-  if (m_gameOver) m_gameOver->setVolume(vol);
-  if (muted)
+  float vol = muted ? 0.0f : 0.3f;
+  m_rotateSink->setVolume(vol);
+  m_dropSink->setVolume(vol);
+  m_lineClearSink->setVolume(vol);
+  m_gameOverSink->setVolume(vol);
+  
+  if (muted) {
     stopMusic();
+  }
 }
 
 void SoundManager::startMusic() {
-  m_noteIndex = 0;
-  playNextNote();
+  if (m_muted) return;
+  m_musicSink->stop();
+  m_musicBuffer->seek(0);
+  m_musicSink->start(m_musicBuffer);
 }
 
 void SoundManager::stopMusic() {
-  m_musicTimer->stop();
-}
-
-void SoundManager::playNextNote() {
-  if (m_muted || m_noteIndex >= m_melody.size()) {
-    if (!m_muted && m_noteIndex >= m_melody.size()) {
-      m_noteIndex = 0;
-      playNextNote();
-    }
-    return;
-  }
-
-  const auto &note = m_melody[m_noteIndex];
-
-  // Play melody note
-  if (note.freq > 0) {
-    QByteArray pcm = squareWave(note.freq, 44100 * note.durationMs / 1000 * 80 / 100, 44100);
-    QSoundEffect *s = loadFromWav(buildWav(pcm));
-    s->setVolume(m_muted ? 0.0f : 0.3f);
-    s->play();
-    connect(s, &QSoundEffect::playingChanged, s, [s]() { s->deleteLater(); });
-  }
-
-  // Play bass note
-  if (m_noteIndex < m_bass.size() && m_bass[m_noteIndex].freq > 0) {
-    const auto &bass = m_bass[m_noteIndex];
-    QByteArray pcm = squareWave(bass.freq, 44100 * bass.durationMs / 1000 * 80 / 100, 44100);
-    QSoundEffect *b = loadFromWav(buildWav(pcm));
-    b->setVolume(m_muted ? 0.0f : 0.15f);
-    b->play();
-    connect(b, &QSoundEffect::playingChanged, b, [b]() { b->deleteLater(); });
-  }
-
-  m_musicTimer->setSingleShot(true);
-  m_musicTimer->start(note.durationMs);
-  m_noteIndex++;
+  m_musicSink->stop();
 }
