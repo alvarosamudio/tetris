@@ -240,14 +240,10 @@ void SoundManager::setMuted(bool muted) {
   m_dropSink->setVolume(vol);
   m_lineClearSink->setVolume(vol);
   m_gameOverSink->setVolume(vol);
-  
-  if (muted) {
-    stopMusic();
-  }
+  m_musicSink->setVolume(muted ? 0.0f : 0.2f);
 }
 
 void SoundManager::startMusic() {
-  if (m_muted) return;
   m_musicSink->stop();
   m_musicBuffer->seek(0);
   m_musicSink->start(m_musicBuffer);
