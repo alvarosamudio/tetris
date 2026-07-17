@@ -5,6 +5,7 @@ export DH_VERBOSE = 1
 	dh $@
 
 override_dh_auto_configure:
+	/usr/lib/qt6/bin/lrelease Tetris.pro || true
 	/usr/lib/qt6/bin/qmake PREFIX=/usr
 
 override_dh_auto_clean:
