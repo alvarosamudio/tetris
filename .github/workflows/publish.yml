@@ -1,0 +1,132 @@
+name: Build and publish .deb + linyaps
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-deb:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            platform: linux/amd64
+            base_image: linuxdeepin/deepin:crimson
+          - arch: arm64
+            platform: linux/arm64
+            base_image: linuxdeepin/deepin:crimson-arm64
+          - arch: riscv64
+            platform: linux/riscv64
+            base_image: linuxdeepin/deepin:crimson-riscv64
+          - arch: loong64
+            platform: linux/loong64
+            base_image: linuxdeepin/deepin:crimson-loong64
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: ${{ matrix.platform }}
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build Docker image and package .deb
+        run: |
+          docker buildx build \
+            --platform ${{ matrix.platform }} \
+            --build-arg BASE_IMAGE=${{ matrix.base_image }} \
+            --load \
+            -t tetris-builder:${{ matrix.arch }} \
+            -f .github/workflows/Dockerfile .
+
+      - name: Extract .deb from Docker image
+        run: |
+          docker create --name extractor-${{ matrix.arch }} --platform ${{ matrix.platform }} tetris-builder:${{ matrix.arch }}
+          mkdir -p dist
+          docker cp extractor-${{ matrix.arch }}:/output/. ./dist/
+          docker rm extractor-${{ matrix.arch }}
+
+      - name: Rename .deb with architecture suffix
+        id: deb-info
+        run: |
+          deb_file=$(ls dist/*.deb | head -n 1)
+          base=$(basename "$deb_file" _amd64.deb)
+          base=$(basename "$base" _arm64.deb)
+          base=$(basename "$base" _riscv64.deb)
+          base=$(basename "$base" _loong64.deb)
+          base=$(basename "$base" .deb)
+          new_name="${base}_${{ matrix.arch }}.deb"
+          mv "$deb_file" "dist/$new_name"
+          echo "path=dist/$new_name" >> $GITHUB_OUTPUT
+          echo "name=$new_name" >> $GITHUB_OUTPUT
+          echo "Found: dist/$new_name"
+
+      - name: Upload .deb as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.deb-info.outputs.name }}
+          path: ${{ steps.deb-info.outputs.path }}
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v3
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: ${{ steps.deb-info.outputs.path }}
+          generate_release_notes: true
+
+  build-linyaps:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build linyaps package inside Docker
+        run: |
+          docker build \
+            --build-arg BASE_IMAGE=linuxdeepin/deepin:crimson \
+            --load \
+            -t tetris-linyaps-builder \
+            -f .github/workflows/Dockerfile.linyaps .
+
+      - name: Extract .layer files from Docker image
+        run: |
+          docker create --name linyaps-extractor tetris-linyaps-builder
+          mkdir -p dist-linyaps
+          docker cp linyaps-extractor:/output/. ./dist-linyaps/
+          docker rm linyaps-extractor
+
+      - name: List linyaps output
+        id: layer-info
+        run: |
+          echo "Generated linyaps packages:"
+          ls -lh dist-linyaps/
+          echo "files=$(ls dist-linyaps/*.layer | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
+
+      - name: Upload .layer files as artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: linyaps-layers
+          path: dist-linyaps/*.layer
+
+      - name: Upload to Release
+        uses: softprops/action-gh-release@v3
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: dist-linyaps/*.layer
+          generate_release_notes: false
+

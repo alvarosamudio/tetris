@@ -1,0 +1,22 @@
+ARG BASE_IMAGE=linuxdeepin/deepin:crimson
+FROM ${BASE_IMAGE}
+
+# Install linyaps builder and its dependencies
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        linyaps-builder \
+        ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /build
+COPY . /build
+
+# Build the linyaps package
+# ll-builder needs a network connection to pull the base/runtime layers on first run.
+# The --offline flag can be used if layers are pre-cached.
+RUN ll-builder build --arch $(dpkg --print-architecture) && \
+    ll-builder export --layer && \
+    mkdir -p /output && \
+    cp *.layer /output/
+
+CMD ["/bin/bash"]

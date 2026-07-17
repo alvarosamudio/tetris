@@ -1,0 +1,33 @@
+package:
+  id: org.deepinenespanol.tetris
+  name: Tetris
+  version: 0.2.0.0
+  kind: app
+  description: |
+    Classic Tetris game for Deepin desktop built with Qt6 and DTK6.
+    Features pill-shaped blocks, 8-bit music and high score tracking.
+
+command:
+  - tetris-deepin
+
+base: org.deepin.base/25.0.0
+runtime: org.deepin.runtime.dtk/25.0.0
+
+build: |
+  # Install build-time dependencies
+  apt-get update -y
+  apt-get install -y --no-install-recommends \
+    qt6-base-dev \
+    qt6-multimedia-dev \
+    libdtk6widget-dev \
+    pkg-config
+
+  # Build with qmake
+  cd /project/linglong/sources/Tetris-DTK
+  /usr/lib/qt6/bin/qmake PREFIX=${PREFIX}
+  make -j$(nproc)
+  make install INSTALL_ROOT=
+
+sources:
+  - kind: local
+    url: .
