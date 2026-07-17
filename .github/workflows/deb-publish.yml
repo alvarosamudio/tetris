@@ -34,7 +34,8 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        if: matrix.arch != 'amd64'
+        uses: docker/setup-qemu-action@v4
         with:
           platforms: ${{ matrix.platform }}
 
@@ -43,19 +44,15 @@ jobs:
 
       - name: Build Docker image and package .deb
         run: |
+          mkdir -p dist
           docker buildx build \
             --platform ${{ matrix.platform }} \
             --build-arg BASE_IMAGE=${{ matrix.base_image }} \
-            --load \
+            --output type=local,dest=dist \
+            --cache-from type=gha,scope=${{ matrix.arch }} \
+            --cache-to type=gha,mode=max,scope=${{ matrix.arch }} \
             -t tetris-builder:${{ matrix.arch }} \
             -f .github/workflows/Dockerfile .
-
-      - name: Extract .deb from Docker image
-        run: |
-          docker create --name extractor-${{ matrix.arch }} --platform ${{ matrix.platform }} tetris-builder:${{ matrix.arch }}
-          mkdir -p dist
-          docker cp extractor-${{ matrix.arch }}:/output/. ./dist/
-          docker rm extractor-${{ matrix.arch }}
 
       - name: Find .deb file path
         id: deb-info
@@ -66,7 +63,7 @@ jobs:
           echo "Found .deb file: $deb_file"
 
       - name: Upload .deb as artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ steps.deb-info.outputs.name }}
           path: ${{ steps.deb-info.outputs.path }}
