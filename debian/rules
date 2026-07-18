@@ -5,9 +5,14 @@ export DH_VERBOSE = 1
 	dh $@
 
 override_dh_auto_configure:
-	/usr/lib/qt6/bin/lrelease Tetris.pro || true
-	/usr/lib/qt6/bin/qmake PREFIX=/usr
+	cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
+
+override_dh_auto_build:
+	cmake --build build
+
+override_dh_auto_install:
+	cmake --build build --target install -- DESTDIR=$(CURDIR)/debian/tetris-deepin
 
 override_dh_auto_clean:
 	dh_auto_clean
-	rm -rf .qm
+	rm -rf build
