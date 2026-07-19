@@ -1,12 +1,12 @@
 #include "mainwindow.h"
-#ifdef Q_OS_LINUX
 #include <DMainWindow>
-DWIDGET_USE_NAMESPACE
-#endif
+#include <DTitlebar>
 #include <QVBoxLayout>
 
+DWIDGET_USE_NAMESPACE
+
 MainWindow::MainWindow(QWidget *parent)
-    : MAINWINDOW_BASE(parent)
+    : DMainWindow(parent)
 {
     w = new Widget;
 
