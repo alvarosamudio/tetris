@@ -22,6 +22,8 @@ add_executable(tetris
     src/nextpiecewidget.h
     src/soundmanager.cpp
     src/soundmanager.h
+    src/settingsdialog.cpp
+    src/settingsdialog.h
     src/widget.cpp
     src/widget.h
     src/tetriscolors.h

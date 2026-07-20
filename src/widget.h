@@ -4,6 +4,7 @@
 #include "gameboard.h"
 #include "nextpiecewidget.h"
 #include "soundmanager.h"
+#include "settingsdialog.h"
 #include <QSettings>
 #include <QWidget>
 
@@ -18,6 +19,7 @@ public:
   explicit Widget(QWidget *parent = 0);
   ~Widget();
   SoundManager *soundManager() const { return m_soundManager; }
+  void openSettings();
 
 signals:
   void musicToggled(bool muted);
@@ -25,7 +27,7 @@ signals:
 private slots:
   void onStartClicked();
   void onPauseClicked();
-  void onMuteClicked();
+  void onSettingsClicked();
   void updateScore(int score);
   void updateLevel(int level);
   void updateLines(int lines);
@@ -37,13 +39,19 @@ private slots:
 private:
   void loadHighScore();
   void saveHighScore(int score);
+  void loadSettings();
+  void saveSettings();
 
   Ui::Widget *ui;
   GameBoard *m_gameBoard;
   NextPieceWidget *m_nextPieceWidget;
   SoundManager *m_soundManager;
+  SettingsDialog *m_settingsDialog;
   bool m_muted;
   int m_highScore;
+  bool m_ghostPiece;
+  int m_volume;
+  int m_difficulty;
 };
 
 #endif // WIDGET_H

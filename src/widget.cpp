@@ -3,38 +3,53 @@
 #include <QString>
 #include <QVBoxLayout>
 #include <QLayoutItem>
+#include <QFont>
 
-Widget::Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Widget), m_muted(false), m_highScore(0) {
+Widget::Widget(QWidget *parent)
+    : QWidget(parent), ui(new Ui::Widget), m_muted(false), m_highScore(0),
+      m_ghostPiece(true), m_volume(70), m_difficulty(1) {
   ui->setupUi(this);
 
-  // Set dark theme style for the whole window
-  setStyleSheet(
-    "QWidget { background-color: #1e1e1e; color: white; }"
-    "QLabel { background-color: transparent; color: white; }"
-    "QPushButton { background-color: #333333; color: white; border: 1px solid #555555; border-radius: 4px; padding: 5px; }"
-    "QPushButton:hover { background-color: #444444; }"
-    "#nextContainer { background-color: #232323; border-radius: 10px; }"
-    "QPushButton { min-width: 90px; max-width: 90px; }"
-  );
+  // Font styling
+  QFont titleFont;
+  titleFont.setPointSize(18);
+  titleFont.setBold(true);
+  titleFont.setFamily("Monospace");
+  ui->titleLabel->setFont(titleFont);
+
+  QFont labelFont;
+  labelFont.setPointSize(10);
+  labelFont.setBold(true);
+  labelFont.setFamily("Monospace");
+
+  QFont scoreFont;
+  scoreFont.setPointSize(14);
+  scoreFont.setBold(true);
+  scoreFont.setFamily("Monospace");
+
+  ui->nextLabel->setFont(labelFont);
+  ui->scoreLabel->setFont(scoreFont);
+  ui->highScoreLabel->setFont(labelFont);
+  ui->levelLabel->setFont(labelFont);
+  ui->linesLabel->setFont(labelFont);
 
   m_gameBoard = new GameBoard(this);
   m_nextPieceWidget = new NextPieceWidget(this);
   m_soundManager = new SoundManager(this);
+  m_settingsDialog = new SettingsDialog(this);
 
   // Main Game Container
-  if (!ui->gameContainer->layout()) {
-    ui->gameContainer->setLayout(new QVBoxLayout());
-  }
-  ui->gameContainer->layout()->addWidget(m_gameBoard);
-  ui->gameContainer->layout()->setContentsMargins(0, 0, 0, 0);
+  QVBoxLayout *gameLayout = new QVBoxLayout();
+  gameLayout->setContentsMargins(0, 0, 0, 0);
+  gameLayout->addWidget(m_gameBoard, 1);
+  ui->gameContainer->setLayout(gameLayout);
 
   // Place NextPieceWidget
-  if (!ui->nextContainer->layout()) {
-    ui->nextContainer->setLayout(new QVBoxLayout());
-  }
-  ui->nextContainer->layout()->addWidget(m_nextPieceWidget);
-  ui->nextContainer->layout()->setContentsMargins(5, 5, 5, 5);
-  ui->nextContainer->layout()->setAlignment(Qt::AlignCenter);
+  QVBoxLayout *nextLayout = new QVBoxLayout();
+  nextLayout->setContentsMargins(4, 4, 4, 4);
+  nextLayout->setAlignment(Qt::AlignCenter);
+  nextLayout->addWidget(m_nextPieceWidget, 1);
+  ui->nextContainer->setLayout(nextLayout);
 
   // Center all items in the side panel
   for (int i = 0; i < ui->sideLayout->count(); ++i) {
@@ -43,6 +58,7 @@ Widget::Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Widget), m_muted(f
     }
   }
 
+  // Game signals
   connect(m_gameBoard, &GameBoard::scoreChanged, this, &Widget::updateScore);
   connect(m_gameBoard, &GameBoard::levelChanged, this, &Widget::updateLevel);
   connect(m_gameBoard, &GameBoard::linesChanged, this, &Widget::updateLines);
@@ -50,36 +66,69 @@ Widget::Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Widget), m_muted(f
           &Widget::updateNextPiece);
   connect(m_gameBoard, &GameBoard::gameOver, this, &Widget::onGameOver);
 
-  // Sound effects
-  connect(m_gameBoard, &GameBoard::pieceRotated, m_soundManager, &SoundManager::playRotate);
-  connect(m_gameBoard, &GameBoard::pieceDropped, m_soundManager, &SoundManager::playDrop);
-  connect(m_gameBoard, &GameBoard::linesCleared, m_soundManager, &SoundManager::playLineClear);
-  connect(m_gameBoard, &GameBoard::gameOver, m_soundManager, [this](int) { m_soundManager->playGameOver(); });
+  // Sound signals
+  connect(m_gameBoard, &GameBoard::pieceRotated, m_soundManager,
+          &SoundManager::playRotate);
+  connect(m_gameBoard, &GameBoard::pieceDropped, m_soundManager,
+          &SoundManager::playDrop);
+  connect(m_gameBoard, &GameBoard::linesCleared, m_soundManager,
+          &SoundManager::playLineClear);
+  connect(m_gameBoard, &GameBoard::gameOver, m_soundManager,
+          [this](int) { m_soundManager->playGameOver(); });
   connect(m_gameBoard, &GameBoard::gamePaused, this, &Widget::onGamePaused);
   connect(m_gameBoard, &GameBoard::gameResumed, this, &Widget::onGameResumed);
 
+  // Button signals
   connect(ui->startBtn, &QPushButton::clicked, this, &Widget::onStartClicked);
   connect(ui->pauseBtn, &QPushButton::clicked, this, &Widget::onPauseClicked);
-  connect(ui->muteBtn, &QPushButton::clicked, this, &Widget::onMuteClicked);
+
+  // Settings dialog signals
+  connect(m_settingsDialog, &SettingsDialog::ghostPieceToggled, this,
+          [this](bool enabled) {
+            m_ghostPiece = enabled;
+            m_gameBoard->setGhostPiece(enabled);
+            saveSettings();
+          });
+  connect(m_settingsDialog, &SettingsDialog::musicToggled, this,
+          [this](bool enabled) {
+            m_muted = !enabled;
+            m_soundManager->setMuted(m_muted);
+            saveSettings();
+          });
+  connect(m_settingsDialog, &SettingsDialog::volumeChanged, this,
+          [this](int vol) {
+            m_volume = vol;
+            m_soundManager->setVolume(vol / 100.0f);
+            saveSettings();
+          });
+  connect(m_settingsDialog, &SettingsDialog::difficultyChanged, this,
+          [this](int diff) {
+            m_difficulty = diff;
+            m_gameBoard->setDifficulty(diff);
+            saveSettings();
+          });
 
   // Pause button hidden until game starts
   ui->pauseBtn->hide();
 
-  // Custom styling for labels according to concept
+  // Load persisted settings
+  loadSettings();
+
+  // Apply initial settings to widgets
+  m_gameBoard->setGhostPiece(m_ghostPiece);
+  m_gameBoard->setDifficulty(m_difficulty);
+  m_soundManager->setVolume(m_volume / 100.0f);
+
+  // Sync settings dialog
+  m_settingsDialog->setGhostPiece(m_ghostPiece);
+  m_settingsDialog->setMusic(!m_muted);
+  m_settingsDialog->setVolume(m_volume);
+  m_settingsDialog->setDifficulty(m_difficulty);
+
+  // Initial label text
   ui->scoreLabel->setText(tr("SCORE") + "\n000000");
-  ui->scoreLabel->setStyleSheet(
-      "font-size: 16pt; font-family: 'Monospace'; font-weight: bold; letter-spacing: 2px; color: #ffffff;");
-
-  ui->highScoreLabel->setStyleSheet(
-      "font-size: 11pt; font-family: 'Monospace'; font-weight: bold; color: #ffcc00;");
-
   ui->levelLabel->setText(tr("LEVEL") + "\n01");
-  ui->levelLabel->setStyleSheet(
-      "font-size: 11pt; font-family: 'Monospace'; font-weight: bold; color: #00ccff;");
-
   ui->linesLabel->setText(tr("LINES") + "\n000");
-  ui->linesLabel->setStyleSheet(
-      "font-size: 11pt; font-family: 'Monospace'; font-weight: bold; color: #00ff88;");
 
   loadHighScore();
 }
@@ -96,6 +145,23 @@ void Widget::loadHighScore() {
 void Widget::saveHighScore(int score) {
   QSettings settings("deepin-es", "Tetris");
   settings.setValue("highScore", score);
+  settings.sync();
+}
+
+void Widget::loadSettings() {
+  QSettings settings("deepin-es", "Tetris");
+  m_ghostPiece = settings.value("ghostPiece", true).toBool();
+  m_muted = settings.value("muted", false).toBool();
+  m_volume = settings.value("volume", 70).toInt();
+  m_difficulty = settings.value("difficulty", 1).toInt();
+}
+
+void Widget::saveSettings() {
+  QSettings settings("deepin-es", "Tetris");
+  settings.setValue("ghostPiece", m_ghostPiece);
+  settings.setValue("muted", m_muted);
+  settings.setValue("volume", m_volume);
+  settings.setValue("difficulty", m_difficulty);
   settings.sync();
 }
 
@@ -155,9 +221,17 @@ void Widget::onGameResumed() {
   m_soundManager->resumeMusic();
 }
 
-void Widget::onMuteClicked() {
-  m_muted = !m_muted;
-  ui->muteBtn->setText(m_muted ? tr("Unmute") : tr("Mute"));
-  m_soundManager->setMuted(m_muted);
-  emit musicToggled(m_muted);
+void Widget::onSettingsClicked() {
+  openSettings();
+}
+
+void Widget::openSettings() {
+  m_settingsDialog->setGhostPiece(m_ghostPiece);
+  m_settingsDialog->setMusic(!m_muted);
+  m_settingsDialog->setVolume(m_volume);
+  m_settingsDialog->setDifficulty(m_difficulty);
+
+  if (m_settingsDialog->exec() == QDialog::Accepted) {
+    saveSettings();
+  }
 }
