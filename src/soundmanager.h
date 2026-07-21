@@ -20,6 +20,7 @@ public:
   void playLineClear();
   void playGameOver();
   void setMuted(bool muted);
+  void setVolume(float vol);
   void startMusic();
   void stopMusic();
   void pauseMusic();

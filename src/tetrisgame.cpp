@@ -75,7 +75,7 @@ void BagRandomizer::reset() {
   refill();
 }
 
-TetrisGame::TetrisGame() { reset(); }
+TetrisGame::TetrisGame() { difficulty = 1; reset(); }
 
 void TetrisGame::reset() {
   grid.clear();
@@ -206,9 +206,26 @@ void TetrisGame::clearLines() {
 }
 
 int TetrisGame::getTickInterval() const {
-  // Starts at 800ms, decreases by ~60ms per level, min 80ms
-  int interval = 800 - (level - 1) * 60;
-  return qMax(interval, 80);
+  // Base interval: 800ms, decreases by ~60ms per level, min 80ms
+  // Difficulty multiplier: 0=Easy(1.5x), 1=Normal(1.0x), 2=Hard(0.7x), 3=Expert(0.5x)
+  static const double diffMultipliers[] = {1.5, 1.0, 0.7, 0.5};
+  double mult = diffMultipliers[qBound(0, difficulty, 3)];
+  int interval = static_cast<int>((800 - (level - 1) * 60) * mult);
+  return qMax(interval, 40);
+}
+
+void TetrisGame::setDifficulty(int diff) {
+  difficulty = qBound(0, diff, 3);
+}
+
+QPoint TetrisGame::getGhostPosition() const {
+  if (gameState != GameState::Running)
+    return currentPiece.position;
+  QPoint ghostPos = currentPiece.position;
+  while (isValidPosition(currentPiece, ghostPos + QPoint(0, 1))) {
+    ghostPos += QPoint(0, 1);
+  }
+  return ghostPos;
 }
 
 void TetrisGame::setPaused(bool paused) {

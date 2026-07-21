@@ -294,12 +294,24 @@ void SoundManager::setMuted(bool muted) {
   m_dropSink->setVolume(vol);
   m_lineClearSink->setVolume(vol);
   m_gameOverSink->setVolume(vol);
-  
+
   if (m_musicStreamer) {
     m_musicStreamer->setMuted(muted);
   }
   if (m_musicSink) {
     m_musicSink->setVolume(muted ? 0.0f : 0.2f);
+  }
+}
+
+void SoundManager::setVolume(float vol) {
+  float sfxVol = m_muted ? 0.0f : vol * 0.4f;
+  float musicVol = m_muted ? 0.0f : vol * 0.28f;
+  m_rotateSink->setVolume(sfxVol);
+  m_dropSink->setVolume(sfxVol);
+  m_lineClearSink->setVolume(sfxVol);
+  m_gameOverSink->setVolume(sfxVol);
+  if (m_musicSink) {
+    m_musicSink->setVolume(musicVol);
   }
 }
 

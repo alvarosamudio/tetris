@@ -15,6 +15,8 @@ public:
   void startGame();
   void pauseGame();
   void resumeGame();
+  void setGhostPiece(bool enabled);
+  void setDifficulty(int diff);
 
   const TetrisGame &getGame() const { return game; }
 
@@ -40,10 +42,15 @@ private slots:
 
 private:
   void drawBlock(QPainter &painter, int x, int y, TetrominoType type);
+  void drawGhostBlock(QPainter &painter, int x, int y, TetrominoType type);
 
   TetrisGame game;
   QTimer *timer;
   int blockSize;
+  int m_lineFlashRow;
+  int m_flashTimer;
+  bool m_showGhost;
+  int m_difficulty;
 };
 
 #endif // GAMEBOARD_H

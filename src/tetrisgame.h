@@ -52,6 +52,8 @@ public:
   bool isPaused() const { return gameState == GameState::Paused; }
   void setPaused(bool paused);
   int getTickInterval() const;
+  QPoint getGhostPosition() const;
+  void setDifficulty(int diff);
 
 private:
   enum class GameState { Running, Paused, GameOver };
@@ -68,6 +70,7 @@ private:
   int score;
   int level;
   int totalLinesCleared;
+  int difficulty;
   BagRandomizer bag;
 };
 

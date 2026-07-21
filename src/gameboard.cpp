@@ -2,11 +2,15 @@
 #include "tetriscolors.h"
 #include <QKeyEvent>
 #include <QLinearGradient>
+#include <QRadialGradient>
 #include <QPainter>
 #include <QResizeEvent>
 
-GameBoard::GameBoard(QWidget *parent) : QWidget(parent), blockSize(35) {
+GameBoard::GameBoard(QWidget *parent)
+    : QWidget(parent), blockSize(35), m_lineFlashRow(-1), m_flashTimer(0),
+      m_showGhost(true), m_difficulty(1) {
   setFocusPolicy(Qt::StrongFocus);
+  setAutoFillBackground(true);
   timer = new QTimer(this);
   connect(timer, &QTimer::timeout, this, &GameBoard::gameStep);
 
@@ -28,6 +32,8 @@ void GameBoard::resizeEvent(QResizeEvent *event) {
 
 void GameBoard::startGame() {
   game.reset();
+  m_lineFlashRow = -1;
+  m_flashTimer = 0;
   timer->start(game.getTickInterval());
   emit scoreChanged(game.getScore());
   emit nextPieceChanged(game.getNextPiece());
@@ -48,6 +54,15 @@ void GameBoard::resumeGame() {
   timer->start(game.getTickInterval());
   emit gameResumed();
   update();
+}
+
+void GameBoard::setGhostPiece(bool enabled) { m_showGhost = enabled; update(); }
+
+void GameBoard::setDifficulty(int diff) {
+  m_difficulty = diff;
+  if (timer->isActive()) {
+    timer->setInterval(game.getTickInterval());
+  }
 }
 
 void GameBoard::gameStep() {
@@ -72,7 +87,6 @@ void GameBoard::gameStep() {
   if (game.getNextPiece().type != oldNextType)
     emit nextPieceChanged(game.getNextPiece());
 
-  // Update timer interval for current level
   if (timer->isActive())
     timer->setInterval(game.getTickInterval());
 
@@ -83,32 +97,42 @@ void GameBoard::paintEvent(QPaintEvent *) {
   QPainter painter(this);
   painter.setRenderHint(QPainter::Antialiasing);
 
-  // Background - Concept Dark theme
-  painter.fillRect(rect(), QColor(25, 25, 25));
-
-  // Watermark "deepin"
-  painter.setOpacity(0.05);
-  painter.setPen(Qt::white);
-  QFont font = painter.font();
-  font.setPointSize(45);
-  font.setBold(true);
-  painter.setFont(font);
-  painter.drawText(rect(), Qt::AlignCenter, "deepin");
-  painter.setOpacity(1.0);
+  QPalette pal = palette();
+  QColor bgColor = pal.color(QPalette::Window);
+  QColor textColor = pal.color(QPalette::Text);
+  QColor midColor = pal.color(QPalette::Mid);
+  QColor shadowColor = pal.color(QPalette::Shadow);
+  QColor baseColor = pal.color(QPalette::Base);
 
   int rows = TetrisGame::Height - 2;
+  int boardW = TetrisGame::Width * blockSize;
+  int boardH = rows * blockSize;
+
+  // Background
+  painter.fillRect(rect(), baseColor);
+
+  // Subtle watermark
+  painter.setOpacity(0.05);
+  painter.setPen(textColor);
+  QFont wmfont = painter.font();
+  wmfont.setPointSize(40);
+  wmfont.setBold(true);
+  painter.setFont(wmfont);
+  painter.drawText(QRectF(0, 0, boardW, boardH), Qt::AlignCenter, "TETRIS");
+  painter.setOpacity(1.0);
 
   // Grid lines
-  painter.setPen(QPen(QColor(255, 255, 255, 15), 1));
+  painter.setPen(QPen(midColor, 1));
   for (int x = 0; x <= TetrisGame::Width; ++x) {
     int lx = x * blockSize;
-    painter.drawLine(lx, 0, lx, rows * blockSize);
+    painter.drawLine(lx, 0, lx, boardH);
   }
   for (int y = 0; y <= rows; ++y) {
     int ly = y * blockSize;
-    painter.drawLine(0, ly, TetrisGame::Width * blockSize, ly);
+    painter.drawLine(0, ly, boardW, ly);
   }
 
+  // Draw locked blocks
   const auto &grid = game.getGrid();
   for (int y = 2; y < TetrisGame::Height; ++y) {
     for (int x = 0; x < TetrisGame::Width; ++x) {
@@ -118,6 +142,22 @@ void GameBoard::paintEvent(QPaintEvent *) {
     }
   }
 
+  // Draw ghost piece
+  if (m_showGhost && !game.isGameOver() && !game.isPaused()) {
+    QPoint ghostPos = game.getGhostPosition();
+    const auto &piece = game.getCurrentPiece();
+    if (ghostPos != piece.position) {
+      for (const QPoint &block : piece.blocks) {
+        int gx = ghostPos.x() + block.x();
+        int gy = ghostPos.y() + block.y();
+        if (gy >= 2) {
+          drawGhostBlock(painter, gx, gy - 2, piece.type);
+        }
+      }
+    }
+  }
+
+  // Draw current piece
   const auto &piece = game.getCurrentPiece();
   for (const QPoint &block : piece.blocks) {
     int x = piece.position.x() + block.x();
@@ -127,26 +167,54 @@ void GameBoard::paintEvent(QPaintEvent *) {
     }
   }
 
+  // Game over overlay
   if (game.isGameOver()) {
-    painter.fillRect(rect(), QColor(0, 0, 0, 180));
-    painter.setPen(Qt::white);
-    QFont ofont = painter.font();
-    QFont f = ofont;
-    f.setPointSize(24);
-    f.setBold(true);
-    painter.setFont(f);
-    painter.drawText(rect(), Qt::AlignCenter, tr("GAME OVER"));
-    painter.setFont(ofont);
+    painter.fillRect(QRectF(0, 0, boardW, boardH),
+                     QColor(shadowColor.red(), shadowColor.green(),
+                            shadowColor.blue(), 200));
+
+    QFont titleFont = painter.font();
+    titleFont.setPointSize(26);
+    titleFont.setBold(true);
+    painter.setFont(titleFont);
+    painter.setPen(pal.color(QPalette::Highlight));
+    painter.drawText(QRectF(0, boardH * 0.25, boardW, 50), Qt::AlignCenter,
+                     tr("GAME OVER"));
+
+    QFont scoreFont = painter.font();
+    scoreFont.setPointSize(13);
+    scoreFont.setBold(false);
+    painter.setFont(scoreFont);
+    painter.setPen(textColor);
+    painter.drawText(QRectF(0, boardH * 0.40, boardW, 30), Qt::AlignCenter,
+                     tr("SCORE: %1").arg(game.getScore()));
+
+    QFont hintFont = painter.font();
+    hintFont.setPointSize(10);
+    painter.setFont(hintFont);
+    painter.setPen(QColor(textColor.red(), textColor.green(), textColor.blue(), 120));
+    painter.drawText(QRectF(0, boardH * 0.55, boardW, 30), Qt::AlignCenter,
+                     tr("Press START to play again"));
   } else if (game.isPaused()) {
-    painter.fillRect(rect(), QColor(0, 0, 0, 120));
-    painter.setPen(Qt::white);
-    QFont ofont = painter.font();
-    QFont f = ofont;
-    f.setPointSize(24);
-    f.setBold(true);
-    painter.setFont(f);
-    painter.drawText(rect(), Qt::AlignCenter, tr("PAUSED"));
-    painter.setFont(ofont);
+    painter.fillRect(QRectF(0, 0, boardW, boardH),
+                     QColor(shadowColor.red(), shadowColor.green(),
+                            shadowColor.blue(), 160));
+
+    QFont pfont = painter.font();
+    pfont.setPointSize(28);
+    pfont.setBold(true);
+    painter.setFont(pfont);
+    painter.setPen(textColor);
+    painter.drawText(QRectF(0, boardH * 0.40, boardW, 50), Qt::AlignCenter,
+                     tr("PAUSED"));
+
+    QFont hintFont = painter.font();
+    hintFont.setPointSize(10);
+    hintFont.setBold(false);
+    painter.setFont(hintFont);
+    painter.setPen(QColor(textColor.red(), textColor.green(), textColor.blue(), 120));
+    painter.drawText(QRectF(0, boardH * 0.52, boardW, 30), Qt::AlignCenter,
+                     tr("Press P to resume"));
   }
 }
 
@@ -172,6 +240,18 @@ void GameBoard::drawBlock(QPainter &painter, int x, int y, TetrominoType type) {
                        blockRect.top() + 2,
                        blockRect.width() * 0.4, blockRect.height() * 0.25);
   painter.drawRoundedRect(highlightRect, 2, 2);
+}
+
+void GameBoard::drawGhostBlock(QPainter &painter, int x, int y,
+                                TetrominoType type) {
+  QColor color = getColorForType(type);
+  QRectF blockRect(x * blockSize + 2, y * blockSize + 2, blockSize - 4,
+                   blockSize - 4);
+
+  painter.setPen(QPen(QColor(color.red(), color.green(), color.blue(), 60), 1.5,
+                       Qt::DashLine));
+  painter.setBrush(QColor(color.red(), color.green(), color.blue(), 20));
+  painter.drawRoundedRect(blockRect, 4, 4);
 }
 
 void GameBoard::keyPressEvent(QKeyEvent *event) {
