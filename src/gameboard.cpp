@@ -220,26 +220,41 @@ void GameBoard::paintEvent(QPaintEvent *) {
 
 void GameBoard::drawBlock(QPainter &painter, int x, int y, TetrominoType type) {
   QColor color = getColorForType(type);
-  QRectF blockRect(x * blockSize + 2, y * blockSize + 2, blockSize - 4,
-                   blockSize - 4);
+  QRectF blockRect(x * blockSize + 1.5, y * blockSize + 1.5, blockSize - 3,
+                   blockSize - 3);
 
-  QLinearGradient gradient(blockRect.topLeft(), blockRect.bottomLeft());
-  gradient.setColorAt(0, color.lighter(130));
-  gradient.setColorAt(1, color.darker(120));
-
-  painter.setPen(QPen(color.darker(140), 1));
-  painter.setBrush(gradient);
-
-  // Square with rounded corners
-  painter.drawRoundedRect(blockRect, 5, 5);
-
-  // Top-left highlight
+  // Glow shadow
+  QRadialGradient glow(blockRect.center(), blockRect.width() * 0.7);
+  glow.setColorAt(0, QColor(color.red(), color.green(), color.blue(), 50));
+  glow.setColorAt(1, QColor(color.red(), color.green(), color.blue(), 0));
   painter.setPen(Qt::NoPen);
-  painter.setBrush(QColor(255, 255, 255, 100));
-  QRectF highlightRect(blockRect.left() + 3,
-                       blockRect.top() + 2,
-                       blockRect.width() * 0.4, blockRect.height() * 0.25);
-  painter.drawRoundedRect(highlightRect, 2, 2);
+  painter.setBrush(glow);
+  painter.drawEllipse(QRectF(blockRect.x() - 2, blockRect.y() - 2,
+                              blockRect.width() + 4, blockRect.height() + 4));
+
+  // Main block gradient
+  QLinearGradient gradient(blockRect.topLeft(), blockRect.bottomRight());
+  gradient.setColorAt(0, color.lighter(140));
+  gradient.setColorAt(0.5, color);
+  gradient.setColorAt(1, color.darker(130));
+
+  painter.setPen(QPen(color.darker(150), 1));
+  painter.setBrush(gradient);
+  painter.drawRoundedRect(blockRect, 4, 4);
+
+  // Inner shine
+  painter.setPen(Qt::NoPen);
+  painter.setBrush(QColor(255, 255, 255, 90));
+  QRectF highlight(blockRect.left() + 3, blockRect.top() + 2,
+                   blockRect.width() * 0.35, blockRect.height() * 0.22);
+  painter.drawRoundedRect(highlight, 2, 2);
+
+  // Bottom-right subtle shadow
+  painter.setBrush(QColor(0, 0, 0, 40));
+  QRectF shadow(blockRect.right() - blockRect.width() * 0.3,
+                blockRect.bottom() - blockRect.height() * 0.18,
+                blockRect.width() * 0.25, blockRect.height() * 0.14);
+  painter.drawRoundedRect(shadow, 1, 1);
 }
 
 void GameBoard::drawGhostBlock(QPainter &painter, int x, int y,
