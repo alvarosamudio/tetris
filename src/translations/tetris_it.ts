@@ -11,6 +11,77 @@
         <source>PAUSED</source>
         <translation>IN PAUSA</translation>
     </message>
+    <message>
+        <source>SCORE: %1</source>
+        <translation>PUNTEGGIO: %1</translation>
+    </message>
+    <message>
+        <source>Press START to play again</source>
+        <translation>Premi AVVIA per giocare di nuovo</translation>
+    </message>
+    <message>
+        <source>Press P to resume</source>
+        <translation>Premi P per riprendere</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <source>Settings</source>
+        <translation>Impostazioni</translation>
+    </message>
+    <message>
+        <source>Gameplay</source>
+        <translation>Gioco</translation>
+    </message>
+    <message>
+        <source>Ghost piece</source>
+        <translation>Pezzo fantasma</translation>
+    </message>
+    <message>
+        <source>Show a preview of where the piece will land</source>
+        <translation>Mostra un'anteprima di dove atterrerà il pezzo</translation>
+    </message>
+    <message>
+        <source>Difficulty</source>
+        <translation>Difficoltà</translation>
+    </message>
+    <message>
+        <source>Easy</source>
+        <translation>Facile</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation>Normale</translation>
+    </message>
+    <message>
+        <source>Hard</source>
+        <translation>Difficile</translation>
+    </message>
+    <message>
+        <source>Expert</source>
+        <translation>Esperto</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>Audio</translation>
+    </message>
+    <message>
+        <source>Music</source>
+        <translation>Musica</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation>Volume</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annulla</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Applica</translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -31,16 +102,8 @@
         <translation>Avvia</translation>
     </message>
     <message>
-        <source>Mute</source>
-        <translation>Silenzia</translation>
-    </message>
-    <message>
         <source>RESTART</source>
         <translation>RIAVVIA</translation>
-    </message>
-    <message>
-        <source>Unmute</source>
-        <translation>Attiva audio</translation>
     </message>
     <message>
         <source>LEVEL</source>

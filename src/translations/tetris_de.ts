@@ -11,6 +11,77 @@
         <source>PAUSED</source>
         <translation>PAUSIERT</translation>
     </message>
+    <message>
+        <source>SCORE: %1</source>
+        <translation>PUNKTZAHL: %1</translation>
+    </message>
+    <message>
+        <source>Press START to play again</source>
+        <translation>START drücken, um erneut zu spielen</translation>
+    </message>
+    <message>
+        <source>Press P to resume</source>
+        <translation>P drücken, um fortzusetzen</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <source>Settings</source>
+        <translation>Einstellungen</translation>
+    </message>
+    <message>
+        <source>Gameplay</source>
+        <translation>Spielablauf</translation>
+    </message>
+    <message>
+        <source>Ghost piece</source>
+        <translation>Geisterpiece</translation>
+    </message>
+    <message>
+        <source>Show a preview of where the piece will land</source>
+        <translation>Vorschau anzeigen, wo das Piece landen wird</translation>
+    </message>
+    <message>
+        <source>Difficulty</source>
+        <translation>Schwierigkeit</translation>
+    </message>
+    <message>
+        <source>Easy</source>
+        <translation>Einfach</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation>Normal</translation>
+    </message>
+    <message>
+        <source>Hard</source>
+        <translation>Schwer</translation>
+    </message>
+    <message>
+        <source>Expert</source>
+        <translation>Experte</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>Audio</translation>
+    </message>
+    <message>
+        <source>Music</source>
+        <translation>Musik</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation>Lautstärke</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Abbrechen</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>Anwenden</translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -23,10 +94,6 @@
         <translation>Start</translation>
     </message>
     <message>
-        <source>Mute</source>
-        <translation>Stumm</translation>
-    </message>
-    <message>
         <source>SCORE</source>
         <translation>PUNKTZAHL</translation>
     </message>
@@ -37,10 +104,6 @@
     <message>
         <source>RESTART</source>
         <translation>NEUSTART</translation>
-    </message>
-    <message>
-        <source>Unmute</source>
-        <translation>Stumm aufheben</translation>
     </message>
     <message>
         <source>LEVEL</source>

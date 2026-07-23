@@ -11,6 +11,77 @@
         <source>PAUSED</source>
         <translation>已暂停</translation>
     </message>
+    <message>
+        <source>SCORE: %1</source>
+        <translation>分数: %1</translation>
+    </message>
+    <message>
+        <source>Press START to play again</source>
+        <translation>按"开始"重新游戏</translation>
+    </message>
+    <message>
+        <source>Press P to resume</source>
+        <translation>按P继续游戏</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <source>Settings</source>
+        <translation>设置</translation>
+    </message>
+    <message>
+        <source>Gameplay</source>
+        <translation>游戏</translation>
+    </message>
+    <message>
+        <source>Ghost piece</source>
+        <translation>预览方块</translation>
+    </message>
+    <message>
+        <source>Show a preview of where the piece will land</source>
+        <translation>显示方块落点预览</translation>
+    </message>
+    <message>
+        <source>Difficulty</source>
+        <translation>难度</translation>
+    </message>
+    <message>
+        <source>Easy</source>
+        <translation>简单</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation>普通</translation>
+    </message>
+    <message>
+        <source>Hard</source>
+        <translation>困难</translation>
+    </message>
+    <message>
+        <source>Expert</source>
+        <translation>专家</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>音频</translation>
+    </message>
+    <message>
+        <source>Music</source>
+        <translation>音乐</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation>音量</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>取消</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>应用</translation>
+    </message>
 </context>
 <context>
     <name>Widget</name>
@@ -31,16 +102,8 @@
         <translation>开始</translation>
     </message>
     <message>
-        <source>Mute</source>
-        <translation>静音</translation>
-    </message>
-    <message>
         <source>RESTART</source>
         <translation>重新开始</translation>
-    </message>
-    <message>
-        <source>Unmute</source>
-        <translation>取消静音</translation>
     </message>
     <message>
         <source>LEVEL</source>
