@@ -27,7 +27,6 @@ qrc_*.cpp
 Tetris
 tetris-deepin
 *.pro.user*
-src/translations/*.qm
 .qm/
 *.deb
 qmake_qmake_qm_files.qrc
