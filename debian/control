@@ -1,4 +1,4 @@
-Source: tetris-deepin
+Source: tetris
 Section: games
 Priority: optional
 Maintainer: Deepin en Español <developers@deepinenespanol.org>
@@ -11,7 +11,7 @@ Build-Depends: debhelper-compat (= 13),
 Standards-Version: 4.6.2
 Homepage: https://deepinenespanol.org
 
-Package: tetris-deepin
+Package: tetris
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
 Description: Classic Tetris game for Deepin desktop

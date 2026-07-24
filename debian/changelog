@@ -1,4 +1,4 @@
-tetris-deepin (0.2-1) unstable; urgency=medium
+tetris (0.2-1) unstable; urgency=medium
 
   * Migrate to Qt6/DTK6.
   * Generate 8-bit music and sound effects programmatically.
@@ -10,7 +10,7 @@ tetris-deepin (0.2-1) unstable; urgency=medium
 
  -- Deepin en Español <developers@deepinenespanol.org>  Tue, 14 Jul 2026 22:30:00 +0000
 
-tetris-deepin (0.1-1) unstable; urgency=medium
+tetris (0.1-1) unstable; urgency=medium
 
   * Initial release.
   * Tetris clásico con Qt5/DTK, música, i18n, puntaje alto persistente.

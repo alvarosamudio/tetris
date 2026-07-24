@@ -1,6 +1,6 @@
 <RCC>
     <qresource prefix="/">
-        <file>icons/tetris-deepin.svg</file>
+        <file>icons/tetris.svg</file>
         <file>icons/Logo-Racoon.png</file>
     </qresource>
 </RCC>

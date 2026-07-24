@@ -19,14 +19,14 @@ int main(int argc, char *argv[])
             [[maybe_unused]] bool ok = appTranslator.load("tetris_en", ":/translations/");
     a.installTranslator(&appTranslator);
 
-    a.setProductIcon(QIcon(":/icons/tetris-deepin.svg"));
+    a.setProductIcon(QIcon(":/icons/tetris.svg"));
     a.setProductName(QApplication::translate("main", "Tetris"));
 
     DAboutDialog dialog;
     a.setAboutDialog(&dialog);
     dialog.setWindowTitle("Tetris");
     dialog.setProductName("<span>Tetris</span>");
-    dialog.setProductIcon(QIcon(":/icons/tetris-deepin.svg"));
+    dialog.setProductIcon(QIcon(":/icons/tetris.svg"));
     dialog.setDescription(
         "<div style='text-align:center;'><img src=':/icons/Logo-Racoon.png' width='128'/></div>"
         "<span style=' font-size:8pt; font-weight:600;'>Deepin en Español </span>"
