@@ -2,21 +2,5 @@
     <qresource prefix="/">
         <file>icons/tetris-deepin.svg</file>
         <file>icons/Logo-Racoon.png</file>
-        <file>translations/tetris_ar.qm</file>
-        <file>translations/tetris_ca.qm</file>
-        <file>translations/tetris_de.qm</file>
-        <file>translations/tetris_es.qm</file>
-        <file>translations/tetris_fr.qm</file>
-        <file>translations/tetris_hi.qm</file>
-        <file>translations/tetris_it.qm</file>
-        <file>translations/tetris_ja.qm</file>
-        <file>translations/tetris_ko.qm</file>
-        <file>translations/tetris_nl.qm</file>
-        <file>translations/tetris_pl.qm</file>
-        <file>translations/tetris_pt.qm</file>
-        <file>translations/tetris_ru.qm</file>
-        <file>translations/tetris_tr.qm</file>
-        <file>translations/tetris_uk.qm</file>
-        <file>translations/tetris_zh.qm</file>
     </qresource>
 </RCC>

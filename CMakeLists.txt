@@ -8,7 +8,27 @@ set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Widgets Multimedia)
-find_package(Dtk6Widget REQUIRED)
+find_program(LRELEASE NAMES lrelease HINTS /usr/lib/qt6/bin /usr/lib/qt6/bin REQUIRED)
+
+file(GLOB TS_FILES src/translations/*.ts)
+
+set(QM_FILES "")
+foreach(TS_FILE ${TS_FILES})
+    get_filename_component(TS_NAME ${TS_FILE} NAME_WE)
+    set(QM_FILE "${CMAKE_CURRENT_BINARY_DIR}/${TS_NAME}.qm")
+    add_custom_command(
+        OUTPUT ${QM_FILE}
+        COMMAND ${LRELEASE} ${TS_FILE} -qm ${QM_FILE}
+        DEPENDS ${TS_FILE}
+        COMMENT "Compiling ${TS_NAME}.ts"
+    )
+    list(APPEND QM_FILES ${QM_FILE})
+endforeach()
+
+find_package(dtk6widget QUIET)
+if(NOT dtk6widget_FOUND)
+    find_package(Dtk6Widget REQUIRED)
+endif()
 
 add_executable(tetris
     src/main.cpp
@@ -28,6 +48,7 @@ add_executable(tetris
     src/widget.h
     src/tetriscolors.h
     src/resources.qrc
+    ${QM_FILES}
 )
 
 target_link_libraries(tetris PRIVATE
