@@ -4,6 +4,7 @@ FROM ${BASE_IMAGE} AS builder
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         build-essential \
+        cmake \
         debhelper \
         fakeroot \
         qt6-base-dev \

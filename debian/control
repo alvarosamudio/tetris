@@ -3,8 +3,10 @@ Section: games
 Priority: optional
 Maintainer: Deepin en Español <developers@deepinenespanol.org>
 Build-Depends: debhelper-compat (= 13),
+               cmake,
                qt6-base-dev,
                qt6-multimedia-dev,
+               qt6-l10n-tools,
                libdtk6widget-dev
 Standards-Version: 4.6.2
 Homepage: https://deepinenespanol.org
