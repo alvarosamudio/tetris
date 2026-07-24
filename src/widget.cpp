@@ -119,7 +119,7 @@ Widget::Widget(QWidget *parent)
   m_gameBoard->setDifficulty(m_difficulty);
   m_soundManager->setVolume(m_volume / 100.0f);
 
-  // Sync settings dialog
+  // Sync settings dialog and combo box
   m_settingsDialog->setGhostPiece(m_ghostPiece);
   m_settingsDialog->setMusic(!m_muted);
   m_settingsDialog->setVolume(m_volume);

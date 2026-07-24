@@ -60,6 +60,7 @@ void GameBoard::setGhostPiece(bool enabled) { m_showGhost = enabled; update(); }
 
 void GameBoard::setDifficulty(int diff) {
   m_difficulty = diff;
+  game.setDifficulty(diff);
   if (timer->isActive()) {
     timer->setInterval(game.getTickInterval());
   }
