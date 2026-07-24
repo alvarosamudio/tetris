@@ -1,11 +1,16 @@
 ARG BASE_IMAGE=linuxdeepin/deepin:crimson
 FROM ${BASE_IMAGE}
 
-# Install linyaps builder and its dependencies
+# Add linyaps OBS repository
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        linyaps-builder \
         ca-certificates \
+        gnupg \
+    && echo "deb [trusted=yes] https://ci.deepin.com/repo/obs/linglong:/CI:/release/Deepin_25/ ./" \
+        > /etc/apt/sources.list.d/linglong.list \
+    && apt-get update && \
+    apt-get install -y --no-install-recommends \
+        linglong-builder \
     && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /build
