@@ -28,6 +28,7 @@ Tetris
 tetris-deepin
 *.pro.user*
 .qm/
+src/translations/*.qm
 *.deb
 qmake_qmake_qm_files.qrc
 
