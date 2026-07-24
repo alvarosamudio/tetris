@@ -11,7 +11,7 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  build-deb:
     runs-on: ubuntu-latest
 
     steps:
@@ -43,3 +43,30 @@ jobs:
           docker rm verify
           ls -lh dist/
           file dist/*.deb
+
+  build-uab:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v4
+
+      - name: Build linyaps package
+        run: |
+          docker build \
+            --build-arg BASE_IMAGE=linuxdeepin/deepin:crimson \
+            --load \
+            -t tetris-ci-uab \
+            -f .github/workflows/Dockerfile.linyaps .
+
+      - name: Verify .uab was produced
+        run: |
+          docker create --name verify-uab tetris-ci-uab
+          mkdir -p dist-uab
+          docker cp verify-uab:/output/. ./dist-uab/
+          docker rm verify-uab
+          ls -lh dist-uab/
+          file dist-uab/*.uab
