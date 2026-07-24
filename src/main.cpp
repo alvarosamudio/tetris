@@ -3,7 +3,6 @@
 #include <DApplication>
 #include <DWidgetUtil>
 #include <QApplication>
-#include <QDir>
 #include <QTranslator>
 
 DWIDGET_USE_NAMESPACE
@@ -15,9 +14,9 @@ int main(int argc, char *argv[])
 
     QTranslator appTranslator;
     QString locale = QLocale::system().name();
-    [[maybe_unused]] bool loaded = appTranslator.load(
-        QLatin1String("tetris_") + locale.left(2),
-        QLatin1String(":/translations/"));
+    if (!appTranslator.load("tetris_" + locale, ":/translations/"))
+        if (!appTranslator.load("tetris_" + locale.left(2), ":/translations/"))
+            [[maybe_unused]] bool ok = appTranslator.load("tetris_en", ":/translations/");
     a.installTranslator(&appTranslator);
 
     a.setProductIcon(QIcon(":/icons/tetris-deepin.svg"));
