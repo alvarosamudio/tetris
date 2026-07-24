@@ -15,8 +15,8 @@ COPY . /build
 # ll-builder needs a network connection to pull the base/runtime layers on first run.
 # The --offline flag can be used if layers are pre-cached.
 RUN ll-builder build --arch $(dpkg --print-architecture) && \
-    ll-builder export --layer && \
+    ll-builder export && \
     mkdir -p /output && \
-    cp *.layer /output/
+    cp *.uab /output/
 
 CMD ["/bin/bash"]
