@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE TS>
+<TS version="2.1" language="ja">
+<context>
+    <name>GameBoard</name>
+    <message>
+        <source>GAME OVER</source>
+        <translation>ゲームオーバー</translation>
+    </message>
+    <message>
+        <source>PAUSED</source>
+        <translation>一時停止</translation>
+    </message>
+    <message>
+        <source>SCORE: %1</source>
+        <translation>スコア: %1</translation>
+    </message>
+    <message>
+        <source>Press START to play again</source>
+        <translation>スタートを押して再びプレイ</translation>
+    </message>
+    <message>
+        <source>Press P to resume</source>
+        <translation>Pキーで再開</translation>
+    </message>
+</context>
+<context>
+    <name>SettingsDialog</name>
+    <message>
+        <source>Settings</source>
+        <translation>設定</translation>
+    </message>
+    <message>
+        <source>Gameplay</source>
+        <translation>ゲームプレイ</translation>
+    </message>
+    <message>
+        <source>Ghost piece</source>
+        <translation>ゴーストピース</translation>
+    </message>
+    <message>
+        <source>Show a preview of where the piece will land</source>
+        <translation>ピースがどこに落ちるかのプレビューを表示</translation>
+    </message>
+    <message>
+        <source>Difficulty</source>
+        <translation>難易度</translation>
+    </message>
+    <message>
+        <source>Easy</source>
+        <translation>かんたん</translation>
+    </message>
+    <message>
+        <source>Normal</source>
+        <translation>ふつう</translation>
+    </message>
+    <message>
+        <source>Hard</source>
+        <translation>むずかしい</translation>
+    </message>
+    <message>
+        <source>Expert</source>
+        <translation>エキスパート</translation>
+    </message>
+    <message>
+        <source>Audio</source>
+        <translation>オーディオ</translation>
+    </message>
+    <message>
+        <source>Music</source>
+        <translation>音楽</translation>
+    </message>
+    <message>
+        <source>Volume</source>
+        <translation>音量</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>キャンセル</translation>
+    </message>
+    <message>
+        <source>Apply</source>
+        <translation>適用</translation>
+    </message>
+</context>
+<context>
+    <name>Widget</name>
+    <message>
+        <source>NEXT</source>
+        <translation>つぎ</translation>
+    </message>
+    <message>
+        <source>SCORE</source>
+        <translation>スコア</translation>
+    </message>
+    <message>
+        <source>HI-SCORE</source>
+        <translation>ハイスコア</translation>
+    </message>
+    <message>
+        <source>Start</source>
+        <translation>スタート</translation>
+    </message>
+    <message>
+        <source>RESTART</source>
+        <translation>リスタート</translation>
+    </message>
+    <message>
+        <source>LEVEL</source>
+        <translation>レベル</translation>
+    </message>
+    <message>
+        <source>LINES</source>
+        <translation>ライン</translation>
+    </message>
+    <message>
+        <source>Pause</source>
+        <translation>一時停止</translation>
+    </message>
+    <message>
+        <source>Resume</source>
+        <translation>再開</translation>
+    </message>
+</context>
+<context>
+    <name>main</name>
+    <message>
+        <source>Tetris</source>
+        <translation>テトリス</translation>
+    </message>
+</context>
+</TS>
