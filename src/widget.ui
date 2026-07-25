@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-     <width>486</width>
+      <width>560</width>
      <height>724</height>
    </rect>
   </property>
@@ -44,11 +44,30 @@
        </property>
       </widget>
      </item>
-     <item>
-      <layout class="QVBoxLayout" name="sideLayout">
-       <property name="spacing">
-        <number>8</number>
-       </property>
+      <item>
+       <widget class="QWidget" name="sidePanel" native="true">
+        <property name="minimumSize">
+         <size>
+          <width>140</width>
+          <height>0</height>
+         </size>
+        </property>
+        <layout class="QVBoxLayout" name="sideLayout">
+         <property name="spacing">
+          <number>8</number>
+         </property>
+         <property name="leftMargin">
+          <number>0</number>
+         </property>
+         <property name="topMargin">
+          <number>0</number>
+         </property>
+         <property name="rightMargin">
+          <number>0</number>
+         </property>
+         <property name="bottomMargin">
+          <number>0</number>
+         </property>
        <item>
         <widget class="QLabel" name="titleLabel">
          <property name="text">
@@ -87,18 +106,18 @@
        </item>
        <item>
         <widget class="QWidget" name="nextContainer" native="true">
-         <property name="minimumSize">
-          <size>
-           <width>100</width>
-           <height>100</height>
-          </size>
-         </property>
-         <property name="maximumSize">
-          <size>
-           <width>100</width>
-           <height>100</height>
-          </size>
-         </property>
+          <property name="minimumSize">
+           <size>
+            <width>120</width>
+            <height>120</height>
+           </size>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>120</width>
+            <height>120</height>
+           </size>
+          </property>
          <property name="sizePolicy">
           <sizepolicy hsizetype="Fixed" vsizetype="Fixed">
            <horstretch>0</horstretch>
@@ -230,8 +249,9 @@
          </property>
         </widget>
        </item>
-      </layout>
-     </item>
+       </layout>
+       </widget>
+      </item>
     </layout>
    </item>
   </layout>
