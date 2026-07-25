@@ -129,7 +129,7 @@ jobs:
             -v ${{ github.workspace }}:/build \
             -w /build \
             tetris-linyaps-base:${{ matrix.arch }} \
-            bash -c "ll-builder build --skip-fetch-source && LANG=C LC_ALL=C ll-builder export"
+            bash -c "ll-builder build --skip-fetch-source; LANG=C LC_ALL=C ll-builder export"
 
       - name: List linyaps output
         run: |

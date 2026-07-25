@@ -74,7 +74,7 @@ jobs:
             -v ${{ github.workspace }}:/build \
             -w /build \
             tetris-uab-base \
-            bash -c "ll-builder build --skip-fetch-source && LANG=C LC_ALL=C ll-builder export"
+            bash -c "ll-builder build --skip-fetch-source; LANG=C LC_ALL=C ll-builder export"
 
       - name: Verify .uab was produced
         run: |
