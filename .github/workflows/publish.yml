@@ -113,39 +113,39 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
-      - name: Build linyaps package inside Docker
+      - name: Build Docker base image
         run: |
           docker buildx build \
             --platform ${{ matrix.platform }} \
             --build-arg BASE_IMAGE=${{ matrix.base_image }} \
             --load \
-            -t tetris-linyaps-builder:${{ matrix.arch }} \
+            -t tetris-linyaps-base:${{ matrix.arch }} \
             -f .github/workflows/Dockerfile.linyaps .
 
-      - name: Extract .uab files from Docker image
+      - name: Build linyaps package
         run: |
-          docker create --name linyaps-extractor-${{ matrix.arch }} \
+          docker run --privileged --rm \
             --platform ${{ matrix.platform }} \
-            tetris-linyaps-builder:${{ matrix.arch }}
-          mkdir -p dist-linyaps
-          docker cp linyaps-extractor-${{ matrix.arch }}:/output/. ./dist-linyaps/
-          docker rm linyaps-extractor-${{ matrix.arch }}
+            -v ${{ github.workspace }}:/build \
+            -w /build \
+            tetris-linyaps-base:${{ matrix.arch }} \
+            bash -c "ll-builder build --skip-fetch-source && LANG=C LC_ALL=C ll-builder export"
 
       - name: List linyaps output
         run: |
           echo "Generated linyaps packages:"
-          ls -lh dist-linyaps/
+          ls -lh *.uab
 
       - name: Upload .uab files as artifacts
         uses: actions/upload-artifact@v4
         with:
           name: linyaps-uab-${{ matrix.arch }}
-          path: dist-linyaps/*.uab
+          path: *.uab
 
       - name: Upload to Release
         uses: softprops/action-gh-release@v3
         if: startsWith(github.ref, 'refs/tags/')
         with:
-          files: dist-linyaps/*.uab
+          files: *.uab
           generate_release_notes: false
 
