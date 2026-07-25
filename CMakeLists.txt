@@ -13,6 +13,7 @@ find_program(LRELEASE NAMES lrelease HINTS /usr/lib/qt6/bin /usr/lib/qt6/bin REQ
 file(GLOB TS_FILES src/translations/*.ts)
 
 set(QM_FILES "")
+set(QRC_ENTRIES "")
 foreach(TS_FILE ${TS_FILES})
     get_filename_component(TS_NAME ${TS_FILE} NAME_WE)
     set(QM_FILE "${CMAKE_CURRENT_BINARY_DIR}/${TS_NAME}.qm")
@@ -23,7 +24,12 @@ foreach(TS_FILE ${TS_FILES})
         COMMENT "Compiling ${TS_NAME}.ts"
     )
     list(APPEND QM_FILES ${QM_FILE})
+    string(APPEND QRC_ENTRIES "    <file>${TS_NAME}.qm</file>\n")
 endforeach()
+
+file(WRITE "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc"
+    "<RCC>\n    <qresource prefix=\"/translations\">\n${QRC_ENTRIES}    </qresource>\n</RCC>\n"
+)
 
 find_package(dtk6widget QUIET)
 if(NOT dtk6widget_FOUND)
@@ -48,6 +54,7 @@ add_executable(tetris
     src/widget.h
     src/tetriscolors.h
     src/resources.qrc
+    "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc"
     ${QM_FILES}
 )
 
