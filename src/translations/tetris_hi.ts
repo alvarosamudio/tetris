@@ -4,24 +4,37 @@
 <context>
     <name>GameBoard</name>
     <message>
+        <location filename="../gameboard.cpp" line="183"/>
         <source>GAME OVER</source>
-        <translation type="vanished">खेल समाप्त</translation>
+        <translation>खेल समाप्त</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="210"/>
         <source>PAUSED</source>
-        <translation type="vanished">रुका हुआ</translation>
+        <translation>रुका हुआ</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="191"/>
         <source>SCORE: %1</source>
-        <translation type="vanished">स्कोर: %1</translation>
+        <translation>स्कोर: %1</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="198"/>
         <source>Press START to play again</source>
-        <translation type="vanished">फिर से खेलने के लिए START दबाएं</translation>
+        <translation>फिर से खेलने के लिए START दबाएं</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="218"/>
         <source>Press P to resume</source>
-        <translation type="vanished">जारी रखने के लिए P दबाएं</translation>
+        <translation>जारी रखने के लिए P दबाएं</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow.cpp" line="27"/>
+        <source>Settings</source>
+        <translation type="unfinished">सेटिंग्स</translation>
     </message>
 </context>
 <context>
@@ -111,76 +124,51 @@
     </message>
     <message>
         <location filename="../widget.ui" line="135"/>
-        <location filename="../widget.cpp" line="147"/>
-        <location filename="../widget.cpp" line="207"/>
+        <location filename="../widget.cpp" line="129"/>
+        <location filename="../widget.cpp" line="189"/>
         <source>SCORE</source>
         <translation>स्कोर</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="151"/>
-        <location filename="../widget.cpp" line="160"/>
-        <location filename="../widget.cpp" line="191"/>
+        <location filename="../widget.cpp" line="142"/>
+        <location filename="../widget.cpp" line="173"/>
         <source>HI-SCORE</source>
         <translation>सर्वोच्च स्कोर</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="225"/>
-        <source>DIFFICULTY</source>
-        <translation>कठिनाई</translation>
-    </message>
-    <message>
-        <location filename="../widget.ui" line="267"/>
+        <location filename="../widget.ui" line="222"/>
         <source>Start</source>
         <translation>शुरू</translation>
     </message>
     <message>
-        <location filename="../widget.cpp" line="38"/>
-        <source>Easy</source>
-        <translation>आसान</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="39"/>
-        <source>Normal</source>
-        <translation>सामान्य</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="40"/>
-        <source>Hard</source>
-        <translation>कठिन</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="41"/>
-        <source>Expert</source>
-        <translation>विशेषज्ञ</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="198"/>
+        <location filename="../widget.cpp" line="180"/>
         <source>RESTART</source>
         <translation>पुनरारंभ</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="183"/>
-        <location filename="../widget.cpp" line="148"/>
-        <location filename="../widget.cpp" line="212"/>
+        <location filename="../widget.cpp" line="130"/>
+        <location filename="../widget.cpp" line="194"/>
         <source>LEVEL</source>
         <translation>स्तर</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="199"/>
-        <location filename="../widget.cpp" line="149"/>
-        <location filename="../widget.cpp" line="217"/>
+        <location filename="../widget.cpp" line="131"/>
+        <location filename="../widget.cpp" line="199"/>
         <source>LINES</source>
         <translation>पंक्तियाँ</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="274"/>
-        <location filename="../widget.cpp" line="200"/>
-        <location filename="../widget.cpp" line="238"/>
+        <location filename="../widget.ui" line="229"/>
+        <location filename="../widget.cpp" line="182"/>
+        <location filename="../widget.cpp" line="220"/>
         <source>Pause</source>
         <translation>रोकें</translation>
     </message>
     <message>
-        <location filename="../widget.cpp" line="233"/>
+        <location filename="../widget.cpp" line="215"/>
         <source>Resume</source>
         <translation>जारी रखें</translation>
     </message>
@@ -188,8 +176,9 @@
 <context>
     <name>main</name>
     <message>
+        <location filename="../main.cpp" line="23"/>
         <source>Tetris</source>
-        <translation type="vanished">टेट्रिस</translation>
+        <translation>टेट्रिस</translation>
     </message>
 </context>
 </TS>

@@ -4,24 +4,37 @@
 <context>
     <name>GameBoard</name>
     <message>
+        <location filename="../gameboard.cpp" line="183"/>
         <source>GAME OVER</source>
-        <translation type="vanished">SPIEL VORBEI</translation>
+        <translation>SPIEL VORBEI</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="210"/>
         <source>PAUSED</source>
-        <translation type="vanished">PAUSIERT</translation>
+        <translation>PAUSIERT</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="191"/>
         <source>SCORE: %1</source>
-        <translation type="vanished">PUNKTZAHL: %1</translation>
+        <translation>PUNKTZAHL: %1</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="198"/>
         <source>Press START to play again</source>
-        <translation type="vanished">START drücken, um erneut zu spielen</translation>
+        <translation>START drücken, um erneut zu spielen</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="218"/>
         <source>Press P to resume</source>
-        <translation type="vanished">P drücken, um fortzusetzen</translation>
+        <translation>P drücken, um fortzusetzen</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow.cpp" line="27"/>
+        <source>Settings</source>
+        <translation type="unfinished">Einstellungen</translation>
     </message>
 </context>
 <context>
@@ -105,14 +118,14 @@
         <translation>NÄCHSTES</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="267"/>
+        <location filename="../widget.ui" line="222"/>
         <source>Start</source>
         <translation>Start</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="135"/>
-        <location filename="../widget.cpp" line="147"/>
-        <location filename="../widget.cpp" line="207"/>
+        <location filename="../widget.cpp" line="129"/>
+        <location filename="../widget.cpp" line="189"/>
         <source>SCORE</source>
         <translation>PUNKTZAHL</translation>
     </message>
@@ -123,64 +136,39 @@
     </message>
     <message>
         <location filename="../widget.ui" line="151"/>
-        <location filename="../widget.cpp" line="160"/>
-        <location filename="../widget.cpp" line="191"/>
+        <location filename="../widget.cpp" line="142"/>
+        <location filename="../widget.cpp" line="173"/>
         <source>HI-SCORE</source>
         <translation>HÖCHSTPUNKTZAHL</translation>
     </message>
     <message>
-        <location filename="../widget.cpp" line="38"/>
-        <source>Easy</source>
-        <translation>Einfach</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="39"/>
-        <source>Normal</source>
-        <translation>Normal</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="40"/>
-        <source>Hard</source>
-        <translation>Schwer</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="41"/>
-        <source>Expert</source>
-        <translation>Experte</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="198"/>
+        <location filename="../widget.cpp" line="180"/>
         <source>RESTART</source>
         <translation>NEUSTART</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="183"/>
-        <location filename="../widget.cpp" line="148"/>
-        <location filename="../widget.cpp" line="212"/>
+        <location filename="../widget.cpp" line="130"/>
+        <location filename="../widget.cpp" line="194"/>
         <source>LEVEL</source>
         <translation>STUFE</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="199"/>
-        <location filename="../widget.cpp" line="149"/>
-        <location filename="../widget.cpp" line="217"/>
+        <location filename="../widget.cpp" line="131"/>
+        <location filename="../widget.cpp" line="199"/>
         <source>LINES</source>
         <translation>ZEILEN</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="225"/>
-        <source>DIFFICULTY</source>
-        <translation>SCHWIERIGKEITSGRAD</translation>
-    </message>
-    <message>
-        <location filename="../widget.ui" line="274"/>
-        <location filename="../widget.cpp" line="200"/>
-        <location filename="../widget.cpp" line="238"/>
+        <location filename="../widget.ui" line="229"/>
+        <location filename="../widget.cpp" line="182"/>
+        <location filename="../widget.cpp" line="220"/>
         <source>Pause</source>
         <translation>Pause</translation>
     </message>
     <message>
-        <location filename="../widget.cpp" line="233"/>
+        <location filename="../widget.cpp" line="215"/>
         <source>Resume</source>
         <translation>Fortsetzen</translation>
     </message>
@@ -188,8 +176,9 @@
 <context>
     <name>main</name>
     <message>
+        <location filename="../main.cpp" line="23"/>
         <source>Tetris</source>
-        <translation type="vanished">Tetris</translation>
+        <translation>Tetris</translation>
     </message>
 </context>
 </TS>

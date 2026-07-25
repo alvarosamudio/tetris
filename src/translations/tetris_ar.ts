@@ -4,24 +4,37 @@
 <context>
     <name>GameBoard</name>
     <message>
+        <location filename="../gameboard.cpp" line="183"/>
         <source>GAME OVER</source>
-        <translation type="vanished">انتهت اللعبة</translation>
+        <translation>انتهت اللعبة</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="210"/>
         <source>PAUSED</source>
-        <translation type="vanished">متوقف مؤقتاً</translation>
+        <translation>متوقف مؤقتاً</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="191"/>
         <source>SCORE: %1</source>
-        <translation type="vanished">النقاط: %1</translation>
+        <translation>النقاط: %1</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="198"/>
         <source>Press START to play again</source>
-        <translation type="vanished">اضغط بدء للعب مرة أخرى</translation>
+        <translation>اضغط بدء للعب مرة أخرى</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="218"/>
         <source>Press P to resume</source>
-        <translation type="vanished">اضغط P للمتابعة</translation>
+        <translation>اضغط P للمتابعة</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow.cpp" line="27"/>
+        <source>Settings</source>
+        <translation type="unfinished">الإعدادات</translation>
     </message>
 </context>
 <context>
@@ -111,76 +124,51 @@
     </message>
     <message>
         <location filename="../widget.ui" line="135"/>
-        <location filename="../widget.cpp" line="147"/>
-        <location filename="../widget.cpp" line="207"/>
+        <location filename="../widget.cpp" line="129"/>
+        <location filename="../widget.cpp" line="189"/>
         <source>SCORE</source>
         <translation>النقاط</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="151"/>
-        <location filename="../widget.cpp" line="160"/>
-        <location filename="../widget.cpp" line="191"/>
+        <location filename="../widget.cpp" line="142"/>
+        <location filename="../widget.cpp" line="173"/>
         <source>HI-SCORE</source>
         <translation>أعلى نتيجة</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="225"/>
-        <source>DIFFICULTY</source>
-        <translation>الصعوبة</translation>
-    </message>
-    <message>
-        <location filename="../widget.ui" line="267"/>
+        <location filename="../widget.ui" line="222"/>
         <source>Start</source>
         <translation>بدء</translation>
     </message>
     <message>
-        <location filename="../widget.cpp" line="38"/>
-        <source>Easy</source>
-        <translation>سهل</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="39"/>
-        <source>Normal</source>
-        <translation>عادي</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="40"/>
-        <source>Hard</source>
-        <translation>صعب</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="41"/>
-        <source>Expert</source>
-        <translation>خبير</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="198"/>
+        <location filename="../widget.cpp" line="180"/>
         <source>RESTART</source>
         <translation>إعادة بدء</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="183"/>
-        <location filename="../widget.cpp" line="148"/>
-        <location filename="../widget.cpp" line="212"/>
+        <location filename="../widget.cpp" line="130"/>
+        <location filename="../widget.cpp" line="194"/>
         <source>LEVEL</source>
         <translation>المستوى</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="199"/>
-        <location filename="../widget.cpp" line="149"/>
-        <location filename="../widget.cpp" line="217"/>
+        <location filename="../widget.cpp" line="131"/>
+        <location filename="../widget.cpp" line="199"/>
         <source>LINES</source>
         <translation>الخطوط</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="274"/>
-        <location filename="../widget.cpp" line="200"/>
-        <location filename="../widget.cpp" line="238"/>
+        <location filename="../widget.ui" line="229"/>
+        <location filename="../widget.cpp" line="182"/>
+        <location filename="../widget.cpp" line="220"/>
         <source>Pause</source>
         <translation>إيقاف مؤقت</translation>
     </message>
     <message>
-        <location filename="../widget.cpp" line="233"/>
+        <location filename="../widget.cpp" line="215"/>
         <source>Resume</source>
         <translation>متابعة</translation>
     </message>
@@ -188,8 +176,9 @@
 <context>
     <name>main</name>
     <message>
+        <location filename="../main.cpp" line="23"/>
         <source>Tetris</source>
-        <translation type="vanished">تتريس</translation>
+        <translation>تتريس</translation>
     </message>
 </context>
 </TS>

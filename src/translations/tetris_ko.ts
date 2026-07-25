@@ -4,24 +4,37 @@
 <context>
     <name>GameBoard</name>
     <message>
+        <location filename="../gameboard.cpp" line="183"/>
         <source>GAME OVER</source>
-        <translation type="vanished">게임 오버</translation>
+        <translation>게임 오버</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="210"/>
         <source>PAUSED</source>
-        <translation type="vanished">일시 정지</translation>
+        <translation>일시 정지</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="191"/>
         <source>SCORE: %1</source>
-        <translation type="vanished">점수: %1</translation>
+        <translation>점수: %1</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="198"/>
         <source>Press START to play again</source>
-        <translation type="vanished">시작을 눌러 다시 플레이</translation>
+        <translation>시작을 눌러 다시 플레이</translation>
     </message>
     <message>
+        <location filename="../gameboard.cpp" line="218"/>
         <source>Press P to resume</source>
-        <translation type="vanished">P를 눌러 계속하기</translation>
+        <translation>P를 눌러 계속하기</translation>
+    </message>
+</context>
+<context>
+    <name>MainWindow</name>
+    <message>
+        <location filename="../mainwindow.cpp" line="27"/>
+        <source>Settings</source>
+        <translation type="unfinished">설정</translation>
     </message>
 </context>
 <context>
@@ -111,76 +124,51 @@
     </message>
     <message>
         <location filename="../widget.ui" line="135"/>
-        <location filename="../widget.cpp" line="147"/>
-        <location filename="../widget.cpp" line="207"/>
+        <location filename="../widget.cpp" line="129"/>
+        <location filename="../widget.cpp" line="189"/>
         <source>SCORE</source>
         <translation>점수</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="151"/>
-        <location filename="../widget.cpp" line="160"/>
-        <location filename="../widget.cpp" line="191"/>
+        <location filename="../widget.cpp" line="142"/>
+        <location filename="../widget.cpp" line="173"/>
         <source>HI-SCORE</source>
         <translation>최고점수</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="225"/>
-        <source>DIFFICULTY</source>
-        <translation>난이도</translation>
-    </message>
-    <message>
-        <location filename="../widget.ui" line="267"/>
+        <location filename="../widget.ui" line="222"/>
         <source>Start</source>
         <translation>시작</translation>
     </message>
     <message>
-        <location filename="../widget.cpp" line="38"/>
-        <source>Easy</source>
-        <translation>쉬움</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="39"/>
-        <source>Normal</source>
-        <translation>보통</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="40"/>
-        <source>Hard</source>
-        <translation>어려움</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="41"/>
-        <source>Expert</source>
-        <translation>전문가</translation>
-    </message>
-    <message>
-        <location filename="../widget.cpp" line="198"/>
+        <location filename="../widget.cpp" line="180"/>
         <source>RESTART</source>
         <translation>다시 시작</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="183"/>
-        <location filename="../widget.cpp" line="148"/>
-        <location filename="../widget.cpp" line="212"/>
+        <location filename="../widget.cpp" line="130"/>
+        <location filename="../widget.cpp" line="194"/>
         <source>LEVEL</source>
         <translation>레벨</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="199"/>
-        <location filename="../widget.cpp" line="149"/>
-        <location filename="../widget.cpp" line="217"/>
+        <location filename="../widget.cpp" line="131"/>
+        <location filename="../widget.cpp" line="199"/>
         <source>LINES</source>
         <translation>줄</translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="274"/>
-        <location filename="../widget.cpp" line="200"/>
-        <location filename="../widget.cpp" line="238"/>
+        <location filename="../widget.ui" line="229"/>
+        <location filename="../widget.cpp" line="182"/>
+        <location filename="../widget.cpp" line="220"/>
         <source>Pause</source>
         <translation>일시 정지</translation>
     </message>
     <message>
-        <location filename="../widget.cpp" line="233"/>
+        <location filename="../widget.cpp" line="215"/>
         <source>Resume</source>
         <translation>계속하기</translation>
     </message>
@@ -188,8 +176,9 @@
 <context>
     <name>main</name>
     <message>
+        <location filename="../main.cpp" line="23"/>
         <source>Tetris</source>
-        <translation type="vanished">테트리스</translation>
+        <translation>테트리스</translation>
     </message>
 </context>
 </TS>
