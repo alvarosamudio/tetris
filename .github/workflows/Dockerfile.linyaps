@@ -1,6 +1,9 @@
 ARG BASE_IMAGE=linuxdeepin/deepin:crimson
 FROM ${BASE_IMAGE}
 
+# Workaround: Deepin image has a statoverride for ssl-cert group that doesn't exist
+RUN groupadd -f ssl-cert
+
 # Add linyaps OBS repository and install builder
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
