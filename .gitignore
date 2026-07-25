@@ -47,3 +47,9 @@ build*/
 
 # test linyapps
 w/
+
+# linyaps build artifacts
+.uab
+.uabBuild
+*.uab
+linglong/

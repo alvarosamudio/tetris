@@ -19,8 +19,8 @@ COPY . /build
 # Build the linyaps package
 # ll-builder needs a network connection to pull the base/runtime layers on first run.
 # The --offline flag can be used if layers are pre-cached.
-RUN ll-builder build --arch $(dpkg --print-architecture) && \
-    ll-builder export && \
+RUN ll-builder build --skip-fetch-source && \
+    LANG=C LC_ALL=C ll-builder export && \
     mkdir -p /output && \
     cp *.uab /output/
 

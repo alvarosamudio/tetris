@@ -58,5 +58,5 @@ target_link_libraries(tetris PRIVATE
 )
 
 install(TARGETS tetris DESTINATION bin)
-install(FILES src/tetris.desktop DESTINATION share/applications)
+install(FILES src/org.deepinenespanol.tetris.desktop DESTINATION share/applications)
 install(FILES src/icons/tetris.svg DESTINATION share/icons/hicolor/scalable/apps)

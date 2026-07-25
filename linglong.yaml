@@ -1,3 +1,5 @@
+version: "1"
+
 package:
   id: org.deepinenespanol.tetris
   name: Tetris
@@ -10,26 +12,24 @@ package:
 command:
   - tetris
 
-base: org.deepin.base/25.0.0
-runtime: org.deepin.runtime.dtk/25.0.0
+base: org.deepin.base/25.2.2
+runtime: org.deepin.runtime.dtk/25.2.2
 
 build: |
-  # Install build-time dependencies
   apt-get update -y
   apt-get install -y --no-install-recommends \
     cmake \
+    git \
     qt6-base-dev \
     qt6-multimedia-dev \
     libdtk6widget-dev \
     pkg-config \
     qt6-l10n-tools
 
-  # Build with CMake
-  cd /project/linglong/sources/tetris
+  git clone --depth=1 https://github.com/alvarosamudio/tetris.git /tmp/tetris
+  cd /tmp/tetris
   cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
   cmake --build build -j$(nproc)
   cmake --install build --prefix ${PREFIX}
 
-sources:
-  - kind: local
-    url: .
+sources: []
