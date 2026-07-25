@@ -1,4 +1,4 @@
-name: Build and publish .deb + linyaps
+name: Build and publish .deb
 
 on:
   push:
@@ -84,68 +84,4 @@ jobs:
         with:
           files: ${{ steps.deb-info.outputs.path }}
           generate_release_notes: true
-
-  build-linyaps:
-    runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - arch: amd64
-            platform: linux/amd64
-            base_image: linuxdeepin/deepin:crimson
-          - arch: arm64
-            platform: linux/arm64
-            base_image: linuxdeepin/deepin:crimson-arm64
-          - arch: loong64
-            platform: linux/loong64
-            base_image: linuxdeepin/deepin:crimson-loong64
-
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v7
-
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
-        with:
-          platforms: ${{ matrix.platform }}
-
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v4
-
-      - name: Build Docker base image
-        run: |
-          docker buildx build \
-            --platform ${{ matrix.platform }} \
-            --build-arg BASE_IMAGE=${{ matrix.base_image }} \
-            --load \
-            -t tetris-linyaps-base:${{ matrix.arch }} \
-            -f .github/workflows/Dockerfile.linyaps .
-
-      - name: Build linyaps package
-        run: |
-          docker run --privileged --rm \
-            --platform ${{ matrix.platform }} \
-            -v ${{ github.workspace }}:/build \
-            -w /build \
-            tetris-linyaps-base:${{ matrix.arch }} \
-            bash -c "ll-builder build --skip-fetch-source; LANG=C LC_ALL=C ll-builder export"
-
-      - name: List linyaps output
-        run: |
-          echo "Generated linyaps packages:"
-          ls -lh *.uab
-
-      - name: Upload .uab files as artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: linyaps-uab-${{ matrix.arch }}
-          path: *.uab
-
-      - name: Upload to Release
-        uses: softprops/action-gh-release@v3
-        if: startsWith(github.ref, 'refs/tags/')
-        with:
-          files: *.uab
-          generate_release_notes: false
 
