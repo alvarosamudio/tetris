@@ -87,40 +87,59 @@ jobs:
 
   build-linyaps:
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - arch: amd64
+            platform: linux/amd64
+            base_image: linuxdeepin/deepin:crimson
+          - arch: arm64
+            platform: linux/arm64
+            base_image: linuxdeepin/deepin:crimson-arm64
+          - arch: loong64
+            platform: linux/loong64
+            base_image: linuxdeepin/deepin:crimson-loong64
 
     steps:
       - name: Checkout
         uses: actions/checkout@v7
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+        with:
+          platforms: ${{ matrix.platform }}
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
       - name: Build linyaps package inside Docker
         run: |
-          docker build \
-            --build-arg BASE_IMAGE=linuxdeepin/deepin:crimson \
+          docker buildx build \
+            --platform ${{ matrix.platform }} \
+            --build-arg BASE_IMAGE=${{ matrix.base_image }} \
             --load \
-            -t tetris-linyaps-builder \
+            -t tetris-linyaps-builder:${{ matrix.arch }} \
             -f .github/workflows/Dockerfile.linyaps .
 
       - name: Extract .uab files from Docker image
         run: |
-          docker create --name linyaps-extractor tetris-linyaps-builder
+          docker create --name linyaps-extractor-${{ matrix.arch }} \
+            --platform ${{ matrix.platform }} \
+            tetris-linyaps-builder:${{ matrix.arch }}
           mkdir -p dist-linyaps
-          docker cp linyaps-extractor:/output/. ./dist-linyaps/
-          docker rm linyaps-extractor
+          docker cp linyaps-extractor-${{ matrix.arch }}:/output/. ./dist-linyaps/
+          docker rm linyaps-extractor-${{ matrix.arch }}
 
       - name: List linyaps output
-        id: layer-info
         run: |
           echo "Generated linyaps packages:"
           ls -lh dist-linyaps/
-          echo "files=$(ls dist-linyaps/*.uab | tr '\n' ',' | sed 's/,$//')" >> $GITHUB_OUTPUT
 
       - name: Upload .uab files as artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: linyaps-uab
+          name: linyaps-uab-${{ matrix.arch }}
           path: dist-linyaps/*.uab
 
       - name: Upload to Release

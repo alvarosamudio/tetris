@@ -26,6 +26,7 @@ build: |
     pkg-config \
     qt6-l10n-tools
 
+  rm -rf /tmp/tetris
   git clone --depth=1 https://github.com/alvarosamudio/tetris.git /tmp/tetris
   cd /tmp/tetris
   cmake -B build -DCMAKE_INSTALL_PREFIX=/usr -DCMAKE_BUILD_TYPE=Release
