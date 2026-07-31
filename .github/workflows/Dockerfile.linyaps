@@ -1,0 +1,19 @@
+ARG BASE_IMAGE=linuxdeepin/deepin:crimson
+FROM ${BASE_IMAGE}
+
+# Workaround: Deepin image has a statoverride for ssl-cert group that doesn't exist
+RUN groupadd -f ssl-cert
+
+# Add linyaps OBS repository and install builder
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        ca-certificates \
+        gnupg \
+    && echo "deb [trusted=yes] https://ci.deepin.com/repo/obs/linglong:/CI:/release/Deepin_25/ ./" \
+        > /etc/apt/sources.list.d/linglong.list \
+    && apt-get update && \
+    apt-get install -y --no-install-recommends \
+        linglong-builder \
+    && rm -rf /var/lib/apt/lists/*
+
+WORKDIR /build

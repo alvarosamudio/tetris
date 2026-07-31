@@ -45,3 +45,12 @@ build*/
 .idea/
 *.swp
 
+# test linyapps
+w/
+
+# linyaps build artifacts
+.uab
+.uabBuild
+*.uab
+linglong/
+
