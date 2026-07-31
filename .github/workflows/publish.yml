@@ -57,7 +57,7 @@ jobs:
       - name: Rename .deb with architecture suffix
         id: deb-info
         run: |
-          deb_file=$(ls dist/*.deb | head -n 1)
+          deb_file=$(ls dist/*.deb | grep -v dbgsym | head -n 1)
           base=$(basename "$deb_file" _amd64.deb)
           base=$(basename "$base" _arm64.deb)
           base=$(basename "$base" _riscv64.deb)
