@@ -1,5 +1,5 @@
 ARG BASE_IMAGE=linuxdeepin/deepin:crimson
-FROM ${BASE_IMAGE}
+FROM ${BASE_IMAGE} AS builder
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -22,4 +22,5 @@ RUN dpkg-buildpackage -us -uc -b && \
     mkdir -p /output && \
     cp ../*.deb /output/
 
-CMD ["/bin/bash"]
+FROM scratch AS export
+COPY --from=builder /output/ /
