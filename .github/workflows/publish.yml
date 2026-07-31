@@ -69,36 +69,32 @@ jobs:
           name: ${{ steps.deb-info.outputs.name }}
           path: ${{ steps.deb-info.outputs.path }}
 
-      - name: Build linyaps base image
-        if: matrix.arch != 'riscv64'
+      - name: Install linyaps builder (amd64 host)
+        if: matrix.arch == 'amd64'
         run: |
-          docker buildx build \
-            --platform ${{ matrix.platform }} \
-            --build-arg BASE_IMAGE=${{ matrix.base_image }} \
-            --load \
-            -t tetris-linyaps-base:${{ matrix.arch }} \
-            -f .github/workflows/Dockerfile.linyaps .
+          sudo groupadd -f ssl-cert
+          echo "deb [trusted=yes] https://ci.deepin.com/repo/obs/linglong:/CI:/release/Deepin_25/ ./" | \
+            sudo tee /etc/apt/sources.list.d/linglong.list
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends linglong-builder
+          sudo rm -rf /var/lib/apt/lists/*
 
       - name: Build linyaps package from .deb
-        if: matrix.arch != 'riscv64'
+        if: matrix.arch == 'amd64'
         run: |
           mkdir -p linglong/sources
           cp dist/tetris_*.deb linglong/sources/
-          docker run --privileged --rm \
-            --platform ${{ matrix.platform }} \
-            -v ${{ github.workspace }}:/build \
-            -w /build \
-            tetris-linyaps-base:${{ matrix.arch }} \
-            bash -c "ll-builder build --skip-fetch-source; LANG=C LC_ALL=C ll-builder export"
+          ll-builder build --skip-fetch-source
+          LANG=C LC_ALL=C ll-builder export
 
       - name: List linyaps output
-        if: matrix.arch != 'riscv64'
+        if: matrix.arch == 'amd64'
         run: |
           echo "Generated linyaps packages:"
           ls -lh *.uab
 
       - name: Upload .uab as artifact
-        if: matrix.arch != 'riscv64'
+        if: matrix.arch == 'amd64'
         uses: actions/upload-artifact@v7.0.1
         with:
           name: linyaps-uab-${{ matrix.arch }}
@@ -113,7 +109,7 @@ jobs:
 
       - name: Upload linyaps package to Release
         uses: softprops/action-gh-release@v3.0.2
-        if: startsWith(github.ref, 'refs/tags/') && matrix.arch != 'riscv64'
+        if: startsWith(github.ref, 'refs/tags/') && matrix.arch == 'amd64'
         with:
           files: '*.uab'
           generate_release_notes: false
