@@ -52,6 +52,8 @@ private:
   bool m_ghostPiece;
   int m_volume;
   int m_difficulty;
+  int m_musicTheme;
+  int m_musicGenre;
 };
 
 #endif // WIDGET_H

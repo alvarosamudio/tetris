@@ -7,10 +7,10 @@
 
 Widget::Widget(QWidget *parent)
     : QWidget(parent), ui(new Ui::Widget), m_muted(false), m_highScore(0),
-      m_ghostPiece(true), m_volume(70), m_difficulty(1) {
+      m_ghostPiece(true), m_volume(70), m_difficulty(1),
+      m_musicTheme(0), m_musicGenre(0) {
   ui->setupUi(this);
 
-  // Font styling
   QFont titleFont;
   titleFont.setPointSize(18);
   titleFont.setBold(true);
@@ -38,27 +38,23 @@ Widget::Widget(QWidget *parent)
   m_soundManager = new SoundManager(this);
   m_settingsDialog = new SettingsDialog(this);
 
-  // Main Game Container
   QVBoxLayout *gameLayout = new QVBoxLayout();
   gameLayout->setContentsMargins(0, 0, 0, 0);
   gameLayout->addWidget(m_gameBoard, 1);
   ui->gameContainer->setLayout(gameLayout);
 
-  // Place NextPieceWidget
   QVBoxLayout *nextLayout = new QVBoxLayout();
   nextLayout->setContentsMargins(4, 4, 4, 4);
   nextLayout->setAlignment(Qt::AlignCenter);
   nextLayout->addWidget(m_nextPieceWidget, 1);
   ui->nextContainer->setLayout(nextLayout);
 
-  // Center all items in the side panel
   for (int i = 0; i < ui->sideLayout->count(); ++i) {
     if (auto *item = ui->sideLayout->itemAt(i)) {
       item->setAlignment(Qt::AlignHCenter);
     }
   }
 
-  // Game signals
   connect(m_gameBoard, &GameBoard::scoreChanged, this, &Widget::updateScore);
   connect(m_gameBoard, &GameBoard::levelChanged, this, &Widget::updateLevel);
   connect(m_gameBoard, &GameBoard::linesChanged, this, &Widget::updateLines);
@@ -66,7 +62,6 @@ Widget::Widget(QWidget *parent)
           &Widget::updateNextPiece);
   connect(m_gameBoard, &GameBoard::gameOver, this, &Widget::onGameOver);
 
-  // Sound signals
   connect(m_gameBoard, &GameBoard::pieceRotated, m_soundManager,
           &SoundManager::playRotate);
   connect(m_gameBoard, &GameBoard::pieceDropped, m_soundManager,
@@ -78,11 +73,9 @@ Widget::Widget(QWidget *parent)
   connect(m_gameBoard, &GameBoard::gamePaused, this, &Widget::onGamePaused);
   connect(m_gameBoard, &GameBoard::gameResumed, this, &Widget::onGameResumed);
 
-  // Button signals
   connect(ui->startBtn, &QPushButton::clicked, this, &Widget::onStartClicked);
   connect(ui->pauseBtn, &QPushButton::clicked, this, &Widget::onPauseClicked);
 
-  // Settings dialog signals
   connect(m_settingsDialog, &SettingsDialog::ghostPieceToggled, this,
           [this](bool enabled) {
             m_ghostPiece = enabled;
@@ -107,25 +100,36 @@ Widget::Widget(QWidget *parent)
             m_gameBoard->setDifficulty(diff);
             saveSettings();
           });
+  connect(m_settingsDialog, &SettingsDialog::musicThemeChanged, this,
+          [this](int theme) {
+            m_musicTheme = theme;
+            m_soundManager->setTheme(static_cast<SoundManager::Theme>(theme));
+            saveSettings();
+          });
+  connect(m_settingsDialog, &SettingsDialog::musicGenreChanged, this,
+          [this](int genre) {
+            m_musicGenre = genre;
+            m_soundManager->setGenre(static_cast<SoundManager::Genre>(genre));
+            saveSettings();
+          });
 
-  // Pause button hidden until game starts
   ui->pauseBtn->hide();
 
-  // Load persisted settings
   loadSettings();
 
-  // Apply initial settings to widgets
   m_gameBoard->setGhostPiece(m_ghostPiece);
   m_gameBoard->setDifficulty(m_difficulty);
   m_soundManager->setVolume(m_volume / 100.0f);
+  m_soundManager->setTheme(static_cast<SoundManager::Theme>(m_musicTheme));
+  m_soundManager->setGenre(static_cast<SoundManager::Genre>(m_musicGenre));
 
-  // Sync settings dialog and combo box
   m_settingsDialog->setGhostPiece(m_ghostPiece);
   m_settingsDialog->setMusic(!m_muted);
   m_settingsDialog->setVolume(m_volume);
   m_settingsDialog->setDifficulty(m_difficulty);
+  m_settingsDialog->setMusicTheme(m_musicTheme);
+  m_settingsDialog->setMusicGenre(m_musicGenre);
 
-  // Initial label text
   ui->scoreLabel->setText(tr("SCORE") + "\n000000");
   ui->levelLabel->setText(tr("LEVEL") + "\n01");
   ui->linesLabel->setText(tr("LINES") + "\n000");
@@ -154,6 +158,8 @@ void Widget::loadSettings() {
   m_muted = settings.value("muted", false).toBool();
   m_volume = settings.value("volume", 70).toInt();
   m_difficulty = settings.value("difficulty", 1).toInt();
+  m_musicTheme = settings.value("musicTheme", 0).toInt();
+  m_musicGenre = settings.value("musicGenre", 0).toInt();
 }
 
 void Widget::saveSettings() {
@@ -162,6 +168,8 @@ void Widget::saveSettings() {
   settings.setValue("muted", m_muted);
   settings.setValue("volume", m_volume);
   settings.setValue("difficulty", m_difficulty);
+  settings.setValue("musicTheme", m_musicTheme);
+  settings.setValue("musicGenre", m_musicGenre);
   settings.sync();
 }
 
@@ -230,6 +238,8 @@ void Widget::openSettings() {
   m_settingsDialog->setMusic(!m_muted);
   m_settingsDialog->setVolume(m_volume);
   m_settingsDialog->setDifficulty(m_difficulty);
+  m_settingsDialog->setMusicTheme(m_musicTheme);
+  m_settingsDialog->setMusicGenre(m_musicGenre);
 
   if (m_settingsDialog->exec() == QDialog::Accepted) {
     saveSettings();

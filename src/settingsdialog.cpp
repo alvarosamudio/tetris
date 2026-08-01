@@ -5,13 +5,17 @@
 SettingsDialog::SettingsDialog(QWidget *parent)
     : DDialog(parent) {
   setTitle(tr("Settings"));
-  setFixedSize(380, 420);
+  setFixedSize(380, 520);
   setOnButtonClickedClose(true);
 
   QWidget *content = new QWidget(this);
   QVBoxLayout *mainLayout = new QVBoxLayout(content);
   mainLayout->setSpacing(16);
   mainLayout->setContentsMargins(20, 10, 20, 10);
+
+  QFont titleFont;
+  titleFont.setBold(true);
+  titleFont.setPointSize(titleFont.pointSize() + 1);
 
   // --- Gameplay section ---
   DFrame *gameplayFrame = new DFrame;
@@ -20,13 +24,9 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   gameplayLayout->setContentsMargins(16, 14, 16, 14);
 
   DLabel *gameplayTitle = new DLabel(tr("Gameplay"));
-  QFont titleFont = gameplayTitle->font();
-  titleFont.setBold(true);
-  titleFont.setPointSize(titleFont.pointSize() + 1);
   gameplayTitle->setFont(titleFont);
   gameplayLayout->addWidget(gameplayTitle);
 
-  // Ghost piece toggle
   QHBoxLayout *ghostRow = new QHBoxLayout;
   DLabel *ghostLabel = new DLabel(tr("Ghost piece"));
   ghostLabel->setToolTip(tr("Show a preview of where the piece will land"));
@@ -36,7 +36,6 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   ghostRow->addWidget(m_ghostSwitch);
   gameplayLayout->addLayout(ghostRow);
 
-  // Difficulty
   QHBoxLayout *diffRow = new QHBoxLayout;
   DLabel *diffLabel = new DLabel(tr("Difficulty"));
   diffRow->addWidget(diffLabel);
@@ -62,7 +61,6 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   audioTitle->setFont(titleFont);
   audioLayout->addWidget(audioTitle);
 
-  // Music toggle
   QHBoxLayout *musicRow = new QHBoxLayout;
   DLabel *musicLabel = new DLabel(tr("Music"));
   musicRow->addWidget(musicLabel);
@@ -71,7 +69,6 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   musicRow->addWidget(m_musicSwitch);
   audioLayout->addLayout(musicRow);
 
-  // Volume slider
   QHBoxLayout *volRow = new QHBoxLayout;
   DLabel *volIcon = new DLabel(tr("Volume"));
   volRow->addWidget(volIcon);
@@ -87,24 +84,47 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   volRow->addWidget(m_volValueLabel);
   audioLayout->addLayout(volRow);
 
+  // Theme selector
+  QHBoxLayout *themeRow = new QHBoxLayout;
+  DLabel *themeLabel = new DLabel(tr("Theme"));
+  themeRow->addWidget(themeLabel);
+  themeRow->addStretch();
+  m_themeCombo = new DComboBox;
+  m_themeCombo->addItem(tr("Korobeiniki"));
+  m_themeCombo->addItem(tr("Kalinka"));
+  m_themeCombo->addItem(tr("Troika"));
+  m_themeCombo->setFixedWidth(140);
+  themeRow->addWidget(m_themeCombo);
+  audioLayout->addLayout(themeRow);
+
+  // Genre selector
+  QHBoxLayout *genreRow = new QHBoxLayout;
+  DLabel *genreLabel = new DLabel(tr("Genre"));
+  genreRow->addWidget(genreLabel);
+  genreRow->addStretch();
+  m_genreCombo = new DComboBox;
+  m_genreCombo->addItem(tr("Chiptune"));
+  m_genreCombo->addItem(tr("Rock"));
+  m_genreCombo->addItem(tr("Electronic"));
+  m_genreCombo->addItem(tr("Jazz"));
+  m_genreCombo->addItem(tr("Classical"));
+  m_genreCombo->setFixedWidth(140);
+  genreRow->addWidget(m_genreCombo);
+  audioLayout->addLayout(genreRow);
+
   mainLayout->addWidget(audioFrame);
   mainLayout->addStretch();
 
   addContent(content);
 
-  // Buttons
   addButton(tr("Cancel"));
   addButton(tr("Apply"), true, DDialog::ButtonRecommend);
 
-  // Handle button clicks
   connect(this, &DDialog::buttonClicked, this, [this](int index, const QString &) {
-    if (index == 0)
-      reject();
-    else if (index == 1)
-      accept();
+    if (index == 0) reject();
+    else if (index == 1) accept();
   });
 
-  // Settings signals (live apply)
   connect(m_ghostSwitch, &DSwitchButton::toggled, this, &SettingsDialog::ghostPieceToggled);
   connect(m_musicSwitch, &DSwitchButton::toggled, this, &SettingsDialog::musicToggled);
   connect(m_volumeSlider, &DSlider::valueChanged, this, [this](int val) {
@@ -113,12 +133,18 @@ SettingsDialog::SettingsDialog(QWidget *parent)
   });
   connect(m_diffCombo, QOverload<int>::of(&DComboBox::currentIndexChanged), this,
           [this](int idx) { emit difficultyChanged(idx); });
+  connect(m_themeCombo, QOverload<int>::of(&DComboBox::currentIndexChanged), this,
+          [this](int idx) { emit musicThemeChanged(idx); });
+  connect(m_genreCombo, QOverload<int>::of(&DComboBox::currentIndexChanged), this,
+          [this](int idx) { emit musicGenreChanged(idx); });
 }
 
 bool SettingsDialog::ghostPieceEnabled() const { return m_ghostSwitch->isChecked(); }
 bool SettingsDialog::musicEnabled() const { return m_musicSwitch->isChecked(); }
 int SettingsDialog::volume() const { return m_volumeSlider->value(); }
 int SettingsDialog::difficulty() const { return m_diffCombo->currentIndex(); }
+int SettingsDialog::musicTheme() const { return m_themeCombo->currentIndex(); }
+int SettingsDialog::musicGenre() const { return m_genreCombo->currentIndex(); }
 
 void SettingsDialog::setGhostPiece(bool enabled) { m_ghostSwitch->setChecked(enabled); }
 void SettingsDialog::setMusic(bool enabled) { m_musicSwitch->setChecked(enabled); }
@@ -127,3 +153,5 @@ void SettingsDialog::setVolume(int vol) {
   m_volValueLabel->setText(QString("%1%").arg(vol));
 }
 void SettingsDialog::setDifficulty(int diff) { m_diffCombo->setCurrentIndex(diff); }
+void SettingsDialog::setMusicTheme(int theme) { m_themeCombo->setCurrentIndex(theme); }
+void SettingsDialog::setMusicGenre(int genre) { m_genreCombo->setCurrentIndex(genre); }
