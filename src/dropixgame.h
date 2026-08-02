@@ -1,5 +1,5 @@
-#ifndef TETRISGAME_H
-#define TETRISGAME_H
+#ifndef DROPIXGAME_H
+#define DROPIXGAME_H
 
 #include <QtCore/QPoint>
 #include <QtCore/QVector>
@@ -27,12 +27,12 @@ private:
   void refill();
 };
 
-class TetrisGame {
+class DropixGame {
 public:
-  static const int Width = 10;
+  static const int Width = 12;
   static const int Height = 22;
 
-  TetrisGame();
+  DropixGame();
 
   void reset();
   bool step();
@@ -74,4 +74,4 @@ private:
   BagRandomizer bag;
 };
 
-#endif // TETRISGAME_H
+#endif // DROPIXGAME_H

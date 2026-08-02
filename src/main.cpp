@@ -14,24 +14,28 @@ int main(int argc, char *argv[])
 
     QTranslator appTranslator;
     QString locale = QLocale::system().name();
-    if (!appTranslator.load("tetris_" + locale, ":/translations/"))
-        if (!appTranslator.load("tetris_" + locale.left(2), ":/translations/"))
-            [[maybe_unused]] bool ok = appTranslator.load("tetris_en", ":/translations/");
+    if (!appTranslator.load("dropix_" + locale, ":/translations/"))
+        if (!appTranslator.load("dropix_" + locale.left(2), ":/translations/"))
+            [[maybe_unused]] bool ok = appTranslator.load("dropix_en", ":/translations/");
     a.installTranslator(&appTranslator);
 
-    a.setProductIcon(QIcon(":/icons/tetris.svg"));
-    a.setProductName(QApplication::translate("main", "Tetris"));
+    a.setProductIcon(QIcon(":/icons/dropix.svg"));
+    a.setProductName(QApplication::translate("main", "Dropix"));
 
     DAboutDialog dialog;
     a.setAboutDialog(&dialog);
-    dialog.setWindowTitle("Tetris");
-    dialog.setProductName("<span>Tetris</span>");
-    dialog.setProductIcon(QIcon(":/icons/tetris.svg"));
+    dialog.setWindowTitle("Dropix");
+    dialog.setProductName("<span>Dropix</span>");
+    dialog.setProductIcon(QIcon(":/icons/dropix.svg"));
     dialog.setDescription(
         "<div style='text-align:center;'><img src=':/icons/Logo-Racoon.png' width='128'/></div>"
         "<span style=' font-size:8pt; font-weight:600;'>Deepin en Español </span>"
         "<a href='https://deepinenespanol.org'>https://deepinenespanol.org</a><br/>"
-        "<span style=' font-size:8pt; font-weight:600;'>Deepin Latin Code - developers</span>");
+        "<span style=' font-size:8pt; font-weight:600;'>Deepin Latin Code - developers</span>"
+        "<br/><br/>"
+        "<span style=' font-size:7pt;'>\"Tetris\" es una marca registrada de Tetris Holding, LLC. "
+        "Este proyecto es una implementacion independiente hecha desde cero y no esta afiliado, "
+        "patrocinado ni aprobado por The Tetris Company o Tetris Holding, LLC.</span>");
     dialog.setVersion(DApplication::buildVersion("Version 0.3"));
     dialog.setWebsiteName("deepinenespanol.org");
     dialog.setWebsiteLink("https://deepinenespanol.org");

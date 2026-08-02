@@ -1,5 +1,5 @@
 #include "gameboard.h"
-#include "tetriscolors.h"
+#include "dropixcolors.h"
 #include <QKeyEvent>
 #include <QLinearGradient>
 #include <QRadialGradient>
@@ -14,16 +14,16 @@ GameBoard::GameBoard(QWidget *parent)
   timer = new QTimer(this);
   connect(timer, &QTimer::timeout, this, &GameBoard::gameStep);
 
-  int rows = TetrisGame::Height - 2;
-  int minW = TetrisGame::Width * 20;
+  int rows = DropixGame::Height - 2;
+  int minW = DropixGame::Width * 20;
   int minH = rows * 20;
   setMinimumSize(minW, minH);
 }
 
 void GameBoard::resizeEvent(QResizeEvent *event) {
   QWidget::resizeEvent(event);
-  int rows = TetrisGame::Height - 2;
-  int bw = width() / TetrisGame::Width;
+  int rows = DropixGame::Height - 2;
+  int bw = width() / DropixGame::Width;
   int bh = height() / rows;
   blockSize = qMin(bw, bh);
   if (blockSize < 10) blockSize = 10;
@@ -105,8 +105,8 @@ void GameBoard::paintEvent(QPaintEvent *) {
   QColor shadowColor = pal.color(QPalette::Shadow);
   QColor baseColor = pal.color(QPalette::Base);
 
-  int rows = TetrisGame::Height - 2;
-  int boardW = TetrisGame::Width * blockSize;
+  int rows = DropixGame::Height - 2;
+  int boardW = DropixGame::Width * blockSize;
   int boardH = rows * blockSize;
 
   // Background
@@ -119,12 +119,12 @@ void GameBoard::paintEvent(QPaintEvent *) {
   wmfont.setPointSize(40);
   wmfont.setBold(true);
   painter.setFont(wmfont);
-  painter.drawText(QRectF(0, 0, boardW, boardH), Qt::AlignCenter, "TETRIS");
+  painter.drawText(QRectF(0, 0, boardW, boardH), Qt::AlignCenter, "DEEPIN");
   painter.setOpacity(1.0);
 
   // Grid lines
   painter.setPen(QPen(midColor, 1));
-  for (int x = 0; x <= TetrisGame::Width; ++x) {
+  for (int x = 0; x <= DropixGame::Width; ++x) {
     int lx = x * blockSize;
     painter.drawLine(lx, 0, lx, boardH);
   }
@@ -135,8 +135,8 @@ void GameBoard::paintEvent(QPaintEvent *) {
 
   // Draw locked blocks
   const auto &grid = game.getGrid();
-  for (int y = 2; y < TetrisGame::Height; ++y) {
-    for (int x = 0; x < TetrisGame::Width; ++x) {
+  for (int y = 2; y < DropixGame::Height; ++y) {
+    for (int x = 0; x < DropixGame::Width; ++x) {
       if (grid[y][x] != TetrominoType::None) {
         drawBlock(painter, x, y - 2, grid[y][x]);
       }

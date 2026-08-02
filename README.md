@@ -1,6 +1,6 @@
-# Tetris
+# Dropix
 
-Implementacion nativa del clasico **Tetris** desarrollada con **Qt6** y **Deepin Tool Kit (DTK6)** para Deepin Linux.
+Juego de bloques para Deepin Linux desarrollado con **Qt6** y **Deepin Tool Kit (DTK6)**.
 
 ## Caracteristicas
 
@@ -26,14 +26,14 @@ make -j$(nproc)
 ## Ejecutar
 
 ```bash
-./tetris
+./dropix
 ```
 
 O si se instalo globalmente:
 
 ```bash
 sudo make install
-tetris
+dropix
 ```
 
 ## Controles
@@ -45,3 +45,14 @@ tetris
 | `Flecha abajo` | Caida suave |
 | `Espacio` | Caida instantanea (Hard Drop) |
 | `P` | Pausar / Reanudar |
+
+## Aviso legal / Legal notice
+
+"Tetris" es una marca registrada de Tetris Holding, LLC. Este proyecto es una
+implementacion independiente, escrita desde cero y publicada bajo licencia GPL-3.0;
+**no esta afiliado, patrocinado ni aprobado por The Tetris Company o Tetris Holding, LLC**.
+
+"Tetris" is a registered trademark of Tetris Holding, LLC. This project is an
+independent, from-scratch implementation released under the GPL-3.0 license; it is
+**not affiliated with, sponsored by, or endorsed by The Tetris Company or Tetris
+Holding, LLC**.

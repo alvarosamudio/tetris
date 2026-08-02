@@ -12,12 +12,12 @@ MainWindow::MainWindow(QWidget *parent)
 {
     w = new Widget;
 
-    // Game: 10 cols × 20 rows, blockSize=35
-    // Width:  12(margin) + 350(10×35) + 12(spacing) + 100(side) + 12(margin) = 486
+    // Game: 12 cols × 20 rows, blockSize=35
+    // Width:  12(margin) + 420(12×35) + 12(spacing) + 100(side) + 12(margin) = 556
     // Height: 12(margin) + 700(20×35) + 12(margin) = 724
-    resize(486, 724);
-    setFixedSize(486, 724);
-    setWindowTitle("Tetris");
+    resize(556, 724);
+    setFixedSize(556, 724);
+    setWindowTitle("Dropix");
 
     setCentralWidget(w);
     centralWidget()->layout()->setContentsMargins(0, 0, 0, 0);
