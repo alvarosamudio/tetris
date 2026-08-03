@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="es">
+<TS version="2.1" language="ar">
 <context>
     <name>GameBoard</name>
     <message>
         <location filename="../gameboard.cpp" line="183"/>
         <source>GAME OVER</source>
-        <translation>FIN DEL JUEGO</translation>
+        <translation>انتهت اللعبة</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="210"/>
         <source>PAUSED</source>
-        <translation>PAUSADO</translation>
+        <translation>متوقف مؤقتاً</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="191"/>
         <source>SCORE: %1</source>
-        <translation>PUNTOS: %1</translation>
+        <translation>النقاط: %1</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="198"/>
         <source>Press START to play again</source>
-        <translation>Pulsa INICIAR para jugar de nuevo</translation>
+        <translation>اضغط بدء للعب مرة أخرى</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="218"/>
         <source>Press P to resume</source>
-        <translation>Pulsa P para reanudar</translation>
+        <translation>اضغط P للمتابعة</translation>
     </message>
 </context>
 <context>
@@ -34,7 +34,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="27"/>
         <source>Settings</source>
-        <translation type="unfinished">Ajustes</translation>
+        <translation type="unfinished">الإعدادات</translation>
     </message>
 </context>
 <context>
@@ -42,143 +42,143 @@
     <message>
         <location filename="../settingsdialog.cpp" line="7"/>
         <source>Settings</source>
-        <translation>Ajustes</translation>
+        <translation>الإعدادات</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="22"/>
         <source>Gameplay</source>
-        <translation>Juego</translation>
+        <translation>طريقة اللعب</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="31"/>
         <source>Ghost piece</source>
-        <translation>Pieza fantasma</translation>
+        <translation>قطعة شبح</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="32"/>
         <source>Show a preview of where the piece will land</source>
-        <translation>Mostrar una vista previa de dónde caerá la pieza</translation>
+        <translation>عرض معاينة لمكان سقوط القطعة</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="41"/>
         <source>Difficulty</source>
-        <translation>Dificultad</translation>
+        <translation>الصعوبة</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="45"/>
         <source>Easy</source>
-        <translation>Fácil</translation>
+        <translation>سهل</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="46"/>
         <source>Normal</source>
-        <translation>Normal</translation>
+        <translation>عادي</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="47"/>
         <source>Hard</source>
-        <translation>Difícil</translation>
+        <translation>صعب</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="48"/>
         <source>Expert</source>
-        <translation>Experto</translation>
+        <translation>خبير</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="61"/>
         <source>Audio</source>
-        <translation>Audio</translation>
+        <translation>الصوت</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="67"/>
         <source>Music</source>
-        <translation>Música</translation>
+        <translation>الموسيقى</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="76"/>
         <source>Volume</source>
-        <translation>Volumen</translation>
+        <translation>مستوى الصوت</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="96"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>إلغاء</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="97"/>
         <source>Apply</source>
-        <translation>Aplicar</translation>
+        <translation>تطبيق</translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../widget.ui" line="81"/>
-        <source>NEXT</source>
-        <translation>SIGUIENTE</translation>
+        <location filename="../widget.ui" line="55"/>
+        <source>DROPIX</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="222"/>
-        <source>Start</source>
-        <translation>Iniciar</translation>
+        <location filename="../widget.ui" line="81"/>
+        <source>NEXT</source>
+        <translation>التالي</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="135"/>
         <location filename="../widget.cpp" line="129"/>
         <location filename="../widget.cpp" line="189"/>
         <source>SCORE</source>
-        <translation>PUNTOS</translation>
-    </message>
-    <message>
-        <location filename="../widget.ui" line="55"/>
-        <source>TETRIS</source>
-        <translation type="unfinished"></translation>
+        <translation>النقاط</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="151"/>
         <location filename="../widget.cpp" line="142"/>
         <location filename="../widget.cpp" line="173"/>
         <source>HI-SCORE</source>
-        <translation>MÁXIMO</translation>
+        <translation>أعلى نتيجة</translation>
+    </message>
+    <message>
+        <location filename="../widget.ui" line="222"/>
+        <source>Start</source>
+        <translation>بدء</translation>
     </message>
     <message>
         <location filename="../widget.cpp" line="180"/>
         <source>RESTART</source>
-        <translation>REINICIAR</translation>
+        <translation>إعادة بدء</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="183"/>
         <location filename="../widget.cpp" line="130"/>
         <location filename="../widget.cpp" line="194"/>
         <source>LEVEL</source>
-        <translation>NIVEL</translation>
+        <translation>المستوى</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="199"/>
         <location filename="../widget.cpp" line="131"/>
         <location filename="../widget.cpp" line="199"/>
         <source>LINES</source>
-        <translation>LÍNEAS</translation>
+        <translation>الخطوط</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="229"/>
         <location filename="../widget.cpp" line="182"/>
         <location filename="../widget.cpp" line="220"/>
         <source>Pause</source>
-        <translation>Pausar</translation>
+        <translation>إيقاف مؤقت</translation>
     </message>
     <message>
         <location filename="../widget.cpp" line="215"/>
         <source>Resume</source>
-        <translation>Reanudar</translation>
+        <translation>متابعة</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <location filename="../main.cpp" line="23"/>
-        <source>Tetris</source>
-        <translation>Tetris</translation>
+        <source>Dropix</source>
+        <translation>تتريس</translation>
     </message>
 </context>
 </TS>

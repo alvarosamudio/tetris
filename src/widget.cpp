@@ -140,20 +140,20 @@ Widget::Widget(QWidget *parent)
 Widget::~Widget() { delete ui; }
 
 void Widget::loadHighScore() {
-  QSettings settings("deepin-es", "Tetris");
+  QSettings settings("deepin-es", "Dropix");
   m_highScore = settings.value("highScore", 0).toInt();
   QString hsStr = QString("%1").arg(m_highScore, 6, 10, QChar('0'));
   ui->highScoreLabel->setText(tr("HI-SCORE") + "\n" + hsStr);
 }
 
 void Widget::saveHighScore(int score) {
-  QSettings settings("deepin-es", "Tetris");
+  QSettings settings("deepin-es", "Dropix");
   settings.setValue("highScore", score);
   settings.sync();
 }
 
 void Widget::loadSettings() {
-  QSettings settings("deepin-es", "Tetris");
+  QSettings settings("deepin-es", "Dropix");
   m_ghostPiece = settings.value("ghostPiece", true).toBool();
   m_muted = settings.value("muted", false).toBool();
   m_volume = settings.value("volume", 70).toInt();
@@ -163,7 +163,7 @@ void Widget::loadSettings() {
 }
 
 void Widget::saveSettings() {
-  QSettings settings("deepin-es", "Tetris");
+  QSettings settings("deepin-es", "Dropix");
   settings.setValue("ghostPiece", m_ghostPiece);
   settings.setValue("muted", m_muted);
   settings.setValue("volume", m_volume);

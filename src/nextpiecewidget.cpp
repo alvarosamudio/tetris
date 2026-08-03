@@ -1,5 +1,5 @@
 #include "nextpiecewidget.h"
-#include "tetriscolors.h"
+#include "dropixcolors.h"
 #include <QLinearGradient>
 #include <QRadialGradient>
 #include <QPainter>

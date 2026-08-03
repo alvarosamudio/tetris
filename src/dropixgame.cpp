@@ -1,11 +1,11 @@
-#include "tetrisgame.h"
+#include "dropixgame.h"
 #include <QRandomGenerator>
 
 Tetromino Tetromino::create(TetrominoType type) {
   Tetromino t;
   t.type = type;
   t.rotation = 0;
-  t.position = QPoint(TetrisGame::Width / 2 - 1, 0);
+  t.position = QPoint(DropixGame::Width / 2 - 1, 0);
 
   switch (type) {
   case TetrominoType::I:
@@ -75,9 +75,9 @@ void BagRandomizer::reset() {
   refill();
 }
 
-TetrisGame::TetrisGame() { difficulty = 1; reset(); }
+DropixGame::DropixGame() { difficulty = 1; reset(); }
 
-void TetrisGame::reset() {
+void DropixGame::reset() {
   grid.clear();
   grid.resize(Height);
   for (int i = 0; i < Height; ++i)
@@ -92,7 +92,7 @@ void TetrisGame::reset() {
   spawnPiece();
 }
 
-void TetrisGame::spawnPiece() {
+void DropixGame::spawnPiece() {
   currentPiece = nextPiece;
   nextPiece = Tetromino::create(bag.next());
 
@@ -101,7 +101,7 @@ void TetrisGame::spawnPiece() {
   }
 }
 
-bool TetrisGame::step() {
+bool DropixGame::step() {
   if (gameState != GameState::Running)
     return false;
 
@@ -116,7 +116,7 @@ bool TetrisGame::step() {
   return gameState != GameState::GameOver;
 }
 
-void TetrisGame::moveLeft() {
+void DropixGame::moveLeft() {
   if (gameState != GameState::Running)
     return;
   QPoint nextPos = currentPiece.position + QPoint(-1, 0);
@@ -124,7 +124,7 @@ void TetrisGame::moveLeft() {
     currentPiece.position = nextPos;
 }
 
-void TetrisGame::moveRight() {
+void DropixGame::moveRight() {
   if (gameState != GameState::Running)
     return;
   QPoint nextPos = currentPiece.position + QPoint(1, 0);
@@ -132,7 +132,7 @@ void TetrisGame::moveRight() {
     currentPiece.position = nextPos;
 }
 
-void TetrisGame::rotate() {
+void DropixGame::rotate() {
   if (gameState != GameState::Running)
     return;
   Tetromino rotated = currentPiece;
@@ -141,9 +141,9 @@ void TetrisGame::rotate() {
     currentPiece = rotated;
 }
 
-void TetrisGame::softDrop() { step(); }
+void DropixGame::softDrop() { step(); }
 
-void TetrisGame::hardDrop() {
+void DropixGame::hardDrop() {
   if (gameState != GameState::Running)
     return;
   while (isValidPosition(currentPiece, currentPiece.position + QPoint(0, 1))) {
@@ -153,7 +153,7 @@ void TetrisGame::hardDrop() {
   step();
 }
 
-bool TetrisGame::isValidPosition(const Tetromino &piece, QPoint pos) const {
+bool DropixGame::isValidPosition(const Tetromino &piece, QPoint pos) const {
   for (const QPoint &block : piece.blocks) {
     int x = pos.x() + block.x();
     int y = pos.y() + block.y();
@@ -165,7 +165,7 @@ bool TetrisGame::isValidPosition(const Tetromino &piece, QPoint pos) const {
   return true;
 }
 
-void TetrisGame::lockPiece() {
+void DropixGame::lockPiece() {
   for (const QPoint &block : currentPiece.blocks) {
     int x = currentPiece.position.x() + block.x();
     int y = currentPiece.position.y() + block.y();
@@ -175,7 +175,7 @@ void TetrisGame::lockPiece() {
   }
 }
 
-void TetrisGame::clearLines() {
+void DropixGame::clearLines() {
   int linesCleared = 0;
   for (int y = Height - 1; y >= 0; --y) {
     bool full = true;
@@ -205,7 +205,7 @@ void TetrisGame::clearLines() {
   }
 }
 
-int TetrisGame::getTickInterval() const {
+int DropixGame::getTickInterval() const {
   // Base interval: 800ms, decreases by ~60ms per level, min 80ms
   // Difficulty multiplier: 0=Easy(1.5x), 1=Normal(1.0x), 2=Hard(0.7x), 3=Expert(0.5x)
   static const double diffMultipliers[] = {1.5, 1.0, 0.7, 0.5};
@@ -214,11 +214,11 @@ int TetrisGame::getTickInterval() const {
   return qMax(interval, 40);
 }
 
-void TetrisGame::setDifficulty(int diff) {
+void DropixGame::setDifficulty(int diff) {
   difficulty = qBound(0, diff, 3);
 }
 
-QPoint TetrisGame::getGhostPosition() const {
+QPoint DropixGame::getGhostPosition() const {
   if (gameState != GameState::Running)
     return currentPiece.position;
   QPoint ghostPos = currentPiece.position;
@@ -228,7 +228,7 @@ QPoint TetrisGame::getGhostPosition() const {
   return ghostPos;
 }
 
-void TetrisGame::setPaused(bool paused) {
+void DropixGame::setPaused(bool paused) {
   if (gameState == GameState::GameOver)
     return;
   gameState = paused ? GameState::Paused : GameState::Running;

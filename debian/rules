@@ -11,7 +11,7 @@ override_dh_auto_build:
 	cmake --build build
 
 override_dh_auto_install:
-	cmake --build build --target install -- DESTDIR=$(CURDIR)/debian/tetris
+	cmake --build build --target install -- DESTDIR=$(CURDIR)/debian/dropix
 
 override_dh_auto_clean:
 	dh_auto_clean

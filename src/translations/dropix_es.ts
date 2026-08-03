@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="nl">
+<TS version="2.1" language="es">
 <context>
     <name>GameBoard</name>
     <message>
         <location filename="../gameboard.cpp" line="183"/>
         <source>GAME OVER</source>
-        <translation>SPEL VOORBIJ</translation>
+        <translation>FIN DEL JUEGO</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="210"/>
         <source>PAUSED</source>
-        <translation>GEPAUZEERD</translation>
+        <translation>PAUSADO</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="191"/>
         <source>SCORE: %1</source>
-        <translation>SCORE: %1</translation>
+        <translation>PUNTOS: %1</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="198"/>
         <source>Press START to play again</source>
-        <translation>Druk op START om opnieuw te spelen</translation>
+        <translation>Pulsa INICIAR para jugar de nuevo</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="218"/>
         <source>Press P to resume</source>
-        <translation>Druk op P om verder te gaan</translation>
+        <translation>Pulsa P para reanudar</translation>
     </message>
 </context>
 <context>
@@ -34,7 +34,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="27"/>
         <source>Settings</source>
-        <translation type="unfinished">Instellingen</translation>
+        <translation type="unfinished">Ajustes</translation>
     </message>
 </context>
 <context>
@@ -42,47 +42,47 @@
     <message>
         <location filename="../settingsdialog.cpp" line="7"/>
         <source>Settings</source>
-        <translation>Instellingen</translation>
+        <translation>Ajustes</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="22"/>
         <source>Gameplay</source>
-        <translation>Gameplay</translation>
+        <translation>Juego</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="31"/>
         <source>Ghost piece</source>
-        <translation>Spookstuk</translation>
+        <translation>Pieza fantasma</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="32"/>
         <source>Show a preview of where the piece will land</source>
-        <translation>Toon een voorvertoning van waar het stuk zal landen</translation>
+        <translation>Mostrar una vista previa de dónde caerá la pieza</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="41"/>
         <source>Difficulty</source>
-        <translation>Moeilijkheidsgraad</translation>
+        <translation>Dificultad</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="45"/>
         <source>Easy</source>
-        <translation>Makkelijk</translation>
+        <translation>Fácil</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="46"/>
         <source>Normal</source>
-        <translation>Normaal</translation>
+        <translation>Normal</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="47"/>
         <source>Hard</source>
-        <translation>Moeilijk</translation>
+        <translation>Difícil</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="48"/>
         <source>Expert</source>
-        <translation>Expert</translation>
+        <translation>Experto</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="61"/>
@@ -92,93 +92,93 @@
     <message>
         <location filename="../settingsdialog.cpp" line="67"/>
         <source>Music</source>
-        <translation>Muziek</translation>
+        <translation>Música</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="76"/>
         <source>Volume</source>
-        <translation>Volume</translation>
+        <translation>Volumen</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="96"/>
         <source>Cancel</source>
-        <translation>Annuleren</translation>
+        <translation>Cancelar</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="97"/>
         <source>Apply</source>
-        <translation>Toepassen</translation>
+        <translation>Aplicar</translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../widget.ui" line="55"/>
-        <source>TETRIS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../widget.ui" line="81"/>
         <source>NEXT</source>
-        <translation>VOLGENDE</translation>
+        <translation>SIGUIENTE</translation>
+    </message>
+    <message>
+        <location filename="../widget.ui" line="222"/>
+        <source>Start</source>
+        <translation>Iniciar</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="135"/>
         <location filename="../widget.cpp" line="129"/>
         <location filename="../widget.cpp" line="189"/>
         <source>SCORE</source>
-        <translation>SCORE</translation>
+        <translation>PUNTOS</translation>
+    </message>
+    <message>
+        <location filename="../widget.ui" line="55"/>
+        <source>DROPIX</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widget.ui" line="151"/>
         <location filename="../widget.cpp" line="142"/>
         <location filename="../widget.cpp" line="173"/>
         <source>HI-SCORE</source>
-        <translation>HOOGSTE SCORE</translation>
-    </message>
-    <message>
-        <location filename="../widget.ui" line="222"/>
-        <source>Start</source>
-        <translation>Start</translation>
+        <translation>MÁXIMO</translation>
     </message>
     <message>
         <location filename="../widget.cpp" line="180"/>
         <source>RESTART</source>
-        <translation>OPNIEUW</translation>
+        <translation>REINICIAR</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="183"/>
         <location filename="../widget.cpp" line="130"/>
         <location filename="../widget.cpp" line="194"/>
         <source>LEVEL</source>
-        <translation>NIVEAU</translation>
+        <translation>NIVEL</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="199"/>
         <location filename="../widget.cpp" line="131"/>
         <location filename="../widget.cpp" line="199"/>
         <source>LINES</source>
-        <translation>LIJNEN</translation>
+        <translation>LÍNEAS</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="229"/>
         <location filename="../widget.cpp" line="182"/>
         <location filename="../widget.cpp" line="220"/>
         <source>Pause</source>
-        <translation>Pauzeren</translation>
+        <translation>Pausar</translation>
     </message>
     <message>
         <location filename="../widget.cpp" line="215"/>
         <source>Resume</source>
-        <translation>Hervatten</translation>
+        <translation>Reanudar</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <location filename="../main.cpp" line="23"/>
-        <source>Tetris</source>
-        <translation>Tetris</translation>
+        <source>Dropix</source>
+        <translation>Dropix</translation>
     </message>
 </context>
 </TS>

@@ -1,7 +1,7 @@
 #ifndef NEXTPIECEWIDGET_H
 #define NEXTPIECEWIDGET_H
 
-#include "tetrisgame.h"
+#include "dropixgame.h"
 #include <QWidget>
 
 class NextPieceWidget : public QWidget {

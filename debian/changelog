@@ -1,10 +1,18 @@
-tetris (0.3-1) unstable; urgency=medium
+dropix (0.4-1) unstable; urgency=medium
+
+  * Rebrand from "Tetris" to "Dropix" to avoid infringing Tetris trademark/copyright.
+  * 12-column board, custom color palette.
+  * Add trademark disclaimer.
+
+ -- Deepin en Español <developers@deepinenespanol.org>  Wed, 05 Aug 2026 12:00:00 +0000
+
+dropix (0.3-1) unstable; urgency=medium
 
   * New version 0.3.
 
  -- Deepin en Español <developers@deepinenespanol.org>  Wed, 29 Jul 2026 12:00:00 +0000
 
-tetris (0.2-1) unstable; urgency=medium
+dropix (0.2-1) unstable; urgency=medium
 
   * Migrate to Qt6/DTK6.
   * Generate 8-bit music and sound effects programmatically.
@@ -16,9 +24,9 @@ tetris (0.2-1) unstable; urgency=medium
 
  -- Deepin en Español <developers@deepinenespanol.org>  Tue, 14 Jul 2026 22:30:00 +0000
 
-tetris (0.1-1) unstable; urgency=medium
+dropix (0.1-1) unstable; urgency=medium
 
   * Initial release.
-  * Tetris clásico con Qt5/DTK, música, i18n, puntaje alto persistente.
+  * Juego de bloques clásico con Qt5/DTK, música, i18n, puntaje alto persistente.
 
  -- Deepin en Español <developers@deepinenespanol.org>  Wed, 08 Jul 2026 18:00:00 +0000

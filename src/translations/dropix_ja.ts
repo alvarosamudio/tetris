@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="pt">
+<TS version="2.1" language="ja">
 <context>
     <name>GameBoard</name>
     <message>
         <location filename="../gameboard.cpp" line="183"/>
         <source>GAME OVER</source>
-        <translation>FIM DE JOGO</translation>
+        <translation>ゲームオーバー</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="210"/>
         <source>PAUSED</source>
-        <translation>PAUSADO</translation>
+        <translation>一時停止</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="191"/>
         <source>SCORE: %1</source>
-        <translation>PONTOS: %1</translation>
+        <translation>スコア: %1</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="198"/>
         <source>Press START to play again</source>
-        <translation>Pressione INICIAR para jogar novamente</translation>
+        <translation>スタートを押して再びプレイ</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="218"/>
         <source>Press P to resume</source>
-        <translation>Pressione P para continuar</translation>
+        <translation>Pキーで再開</translation>
     </message>
 </context>
 <context>
@@ -34,7 +34,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="27"/>
         <source>Settings</source>
-        <translation type="unfinished">Configurações</translation>
+        <translation type="unfinished">設定</translation>
     </message>
 </context>
 <context>
@@ -42,143 +42,143 @@
     <message>
         <location filename="../settingsdialog.cpp" line="7"/>
         <source>Settings</source>
-        <translation>Configurações</translation>
+        <translation>設定</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="22"/>
         <source>Gameplay</source>
-        <translation>Jogo</translation>
+        <translation>ゲームプレイ</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="31"/>
         <source>Ghost piece</source>
-        <translation>Peça fantasma</translation>
+        <translation>ゴーストピース</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="32"/>
         <source>Show a preview of where the piece will land</source>
-        <translation>Mostrar uma pré-visualização de onde a peça vai cair</translation>
+        <translation>ピースがどこに落ちるかのプレビューを表示</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="41"/>
         <source>Difficulty</source>
-        <translation>Dificuldade</translation>
+        <translation>難易度</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="45"/>
         <source>Easy</source>
-        <translation>Fácil</translation>
+        <translation>かんたん</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="46"/>
         <source>Normal</source>
-        <translation>Normal</translation>
+        <translation>ふつう</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="47"/>
         <source>Hard</source>
-        <translation>Difícil</translation>
+        <translation>むずかしい</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="48"/>
         <source>Expert</source>
-        <translation>Expert</translation>
+        <translation>エキスパート</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="61"/>
         <source>Audio</source>
-        <translation>Áudio</translation>
+        <translation>オーディオ</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="67"/>
         <source>Music</source>
-        <translation>Música</translation>
+        <translation>音楽</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="76"/>
         <source>Volume</source>
-        <translation>Volume</translation>
+        <translation>音量</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="96"/>
         <source>Cancel</source>
-        <translation>Cancelar</translation>
+        <translation>キャンセル</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="97"/>
         <source>Apply</source>
-        <translation>Aplicar</translation>
+        <translation>適用</translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../widget.ui" line="81"/>
-        <source>NEXT</source>
-        <translation>PRÓXIMO</translation>
+        <location filename="../widget.ui" line="55"/>
+        <source>DROPIX</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <location filename="../widget.ui" line="222"/>
-        <source>Start</source>
-        <translation>Iniciar</translation>
+        <location filename="../widget.ui" line="81"/>
+        <source>NEXT</source>
+        <translation>つぎ</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="135"/>
         <location filename="../widget.cpp" line="129"/>
         <location filename="../widget.cpp" line="189"/>
         <source>SCORE</source>
-        <translation>PONTOS</translation>
-    </message>
-    <message>
-        <location filename="../widget.ui" line="55"/>
-        <source>TETRIS</source>
-        <translation type="unfinished"></translation>
+        <translation>スコア</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="151"/>
         <location filename="../widget.cpp" line="142"/>
         <location filename="../widget.cpp" line="173"/>
         <source>HI-SCORE</source>
-        <translation>RECORDE</translation>
+        <translation>ハイスコア</translation>
+    </message>
+    <message>
+        <location filename="../widget.ui" line="222"/>
+        <source>Start</source>
+        <translation>スタート</translation>
     </message>
     <message>
         <location filename="../widget.cpp" line="180"/>
         <source>RESTART</source>
-        <translation>REINICIAR</translation>
+        <translation>リスタート</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="183"/>
         <location filename="../widget.cpp" line="130"/>
         <location filename="../widget.cpp" line="194"/>
         <source>LEVEL</source>
-        <translation>NÍVEL</translation>
+        <translation>レベル</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="199"/>
         <location filename="../widget.cpp" line="131"/>
         <location filename="../widget.cpp" line="199"/>
         <source>LINES</source>
-        <translation>LINHAS</translation>
+        <translation>ライン</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="229"/>
         <location filename="../widget.cpp" line="182"/>
         <location filename="../widget.cpp" line="220"/>
         <source>Pause</source>
-        <translation>Pausar</translation>
+        <translation>一時停止</translation>
     </message>
     <message>
         <location filename="../widget.cpp" line="215"/>
         <source>Resume</source>
-        <translation>Continuar</translation>
+        <translation>再開</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <location filename="../main.cpp" line="23"/>
-        <source>Tetris</source>
-        <translation>Tetris</translation>
+        <source>Dropix</source>
+        <translation>テトリス</translation>
     </message>
 </context>
 </TS>

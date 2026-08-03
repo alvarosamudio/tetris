@@ -114,7 +114,7 @@
     <name>Widget</name>
     <message>
         <location filename="../widget.ui" line="55"/>
-        <source>TETRIS</source>
+        <source>DROPIX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -177,7 +177,7 @@
     <name>main</name>
     <message>
         <location filename="../main.cpp" line="23"/>
-        <source>Tetris</source>
+        <source>Dropix</source>
         <translation>टेट्रिस</translation>
     </message>
 </context>

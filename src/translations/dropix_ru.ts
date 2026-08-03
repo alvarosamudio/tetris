@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="uk">
+<TS version="2.1" language="ru">
 <context>
     <name>GameBoard</name>
     <message>
         <location filename="../gameboard.cpp" line="183"/>
         <source>GAME OVER</source>
-        <translation>ГРА ЗАКІНЧЕНА</translation>
+        <translation>ИГРА ОКОНЧЕНА</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="210"/>
@@ -16,17 +16,17 @@
     <message>
         <location filename="../gameboard.cpp" line="191"/>
         <source>SCORE: %1</source>
-        <translation>РАХУНОК: %1</translation>
+        <translation>СЧЁТ: %1</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="198"/>
         <source>Press START to play again</source>
-        <translation>Натисніть СТАРТ, щоб грати знову</translation>
+        <translation>Нажмите СТАРТ, чтобы играть снова</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="218"/>
         <source>Press P to resume</source>
-        <translation>Натисніть P, щоб продовжити</translation>
+        <translation>Нажмите P, чтобы продолжить</translation>
     </message>
 </context>
 <context>
@@ -34,7 +34,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="27"/>
         <source>Settings</source>
-        <translation type="unfinished">Налаштування</translation>
+        <translation type="unfinished">Настройки</translation>
     </message>
 </context>
 <context>
@@ -42,27 +42,27 @@
     <message>
         <location filename="../settingsdialog.cpp" line="7"/>
         <source>Settings</source>
-        <translation>Налаштування</translation>
+        <translation>Настройки</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="22"/>
         <source>Gameplay</source>
-        <translation>Гра</translation>
+        <translation>Игра</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="31"/>
         <source>Ghost piece</source>
-        <translation>Привид фігури</translation>
+        <translation>Призрачная фигура</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="32"/>
         <source>Show a preview of where the piece will land</source>
-        <translation>Показувати попередній перегляд місця приземлення фігури</translation>
+        <translation>Показывать предварительный просмотр места приземления фигуры</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="41"/>
         <source>Difficulty</source>
-        <translation>Складність</translation>
+        <translation>Сложность</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="45"/>
@@ -77,12 +77,12 @@
     <message>
         <location filename="../settingsdialog.cpp" line="47"/>
         <source>Hard</source>
-        <translation>Складно</translation>
+        <translation>Сложно</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="48"/>
         <source>Expert</source>
-        <translation>Експерт</translation>
+        <translation>Эксперт</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="61"/>
@@ -92,42 +92,42 @@
     <message>
         <location filename="../settingsdialog.cpp" line="67"/>
         <source>Music</source>
-        <translation>Музика</translation>
+        <translation>Музыка</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="76"/>
         <source>Volume</source>
-        <translation>Гучність</translation>
+        <translation>Громкость</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="96"/>
         <source>Cancel</source>
-        <translation>Скасувати</translation>
+        <translation>Отмена</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="97"/>
         <source>Apply</source>
-        <translation>Застосувати</translation>
+        <translation>Применить</translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
         <location filename="../widget.ui" line="55"/>
-        <source>TETRIS</source>
+        <source>DROPIX</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widget.ui" line="81"/>
         <source>NEXT</source>
-        <translation>НАСТУПНА</translation>
+        <translation>СЛЕДУЮЩАЯ</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="135"/>
         <location filename="../widget.cpp" line="129"/>
         <location filename="../widget.cpp" line="189"/>
         <source>SCORE</source>
-        <translation>РАХУНОК</translation>
+        <translation>СЧЁТ</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="151"/>
@@ -151,14 +151,14 @@
         <location filename="../widget.cpp" line="130"/>
         <location filename="../widget.cpp" line="194"/>
         <source>LEVEL</source>
-        <translation>РІВЕНЬ</translation>
+        <translation>УРОВЕНЬ</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="199"/>
         <location filename="../widget.cpp" line="131"/>
         <location filename="../widget.cpp" line="199"/>
         <source>LINES</source>
-        <translation>ЛІНІЇ</translation>
+        <translation>ЛИНИИ</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="229"/>
@@ -170,15 +170,15 @@
     <message>
         <location filename="../widget.cpp" line="215"/>
         <source>Resume</source>
-        <translation>Продовжити</translation>
+        <translation>Продолжить</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <location filename="../main.cpp" line="23"/>
-        <source>Tetris</source>
-        <translation>Тетріс</translation>
+        <source>Dropix</source>
+        <translation>Тетрис</translation>
     </message>
 </context>
 </TS>

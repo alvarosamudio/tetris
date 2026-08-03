@@ -1,7 +1,7 @@
 #ifndef GAMEBOARD_H
 #define GAMEBOARD_H
 
-#include "tetrisgame.h"
+#include "dropixgame.h"
 #include <QKeyEvent>
 #include <QPainter>
 #include <QResizeEvent>
@@ -18,7 +18,7 @@ public:
   void setGhostPiece(bool enabled);
   void setDifficulty(int diff);
 
-  const TetrisGame &getGame() const { return game; }
+  const DropixGame &getGame() const { return game; }
 
 signals:
   void scoreChanged(int score);
@@ -44,7 +44,7 @@ private:
   void drawBlock(QPainter &painter, int x, int y, TetrominoType type);
   void drawGhostBlock(QPainter &painter, int x, int y, TetrominoType type);
 
-  TetrisGame game;
+  DropixGame game;
   QTimer *timer;
   int blockSize;
   int m_lineFlashRow;

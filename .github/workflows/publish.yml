@@ -51,7 +51,7 @@ jobs:
             --output type=local,dest=dist \
             --cache-from type=gha,scope=${{ matrix.arch }} \
             --cache-to type=gha,mode=max,scope=${{ matrix.arch }} \
-            -t tetris-builder:${{ matrix.arch }} \
+            -t dropix-builder:${{ matrix.arch }} \
             -f .github/workflows/Dockerfile .
 
       - name: Rename .deb with architecture suffix

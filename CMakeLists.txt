@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
-project(tetris VERSION 0.3.0 LANGUAGES CXX)
+project(dropix VERSION 0.3.0 LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -36,14 +36,14 @@ if(NOT dtk6widget_FOUND)
     find_package(Dtk6Widget REQUIRED)
 endif()
 
-add_executable(tetris
+add_executable(dropix
     src/main.cpp
     src/mainwindow.cpp
     src/mainwindow.h
     src/gameboard.cpp
     src/gameboard.h
-    src/tetrisgame.cpp
-    src/tetrisgame.h
+    src/dropixgame.cpp
+    src/dropixgame.h
     src/nextpiecewidget.cpp
     src/nextpiecewidget.h
     src/soundmanager.cpp
@@ -52,18 +52,18 @@ add_executable(tetris
     src/settingsdialog.h
     src/widget.cpp
     src/widget.h
-    src/tetriscolors.h
+    src/dropixcolors.h
     src/resources.qrc
     "${CMAKE_CURRENT_BINARY_DIR}/translations.qrc"
     ${QM_FILES}
 )
 
-target_link_libraries(tetris PRIVATE
+target_link_libraries(dropix PRIVATE
     Qt6::Widgets
     Qt6::Multimedia
     Dtk6::Widget
 )
 
-install(TARGETS tetris DESTINATION bin)
-install(FILES src/org.deepinenespanol.tetris.desktop DESTINATION share/applications)
-install(FILES src/icons/tetris.svg DESTINATION share/icons/hicolor/scalable/apps)
+install(TARGETS dropix DESTINATION bin)
+install(FILES src/org.deepinenespanol.dropix.desktop DESTINATION share/applications)
+install(FILES src/icons/dropix.svg DESTINATION share/icons/hicolor/scalable/apps)

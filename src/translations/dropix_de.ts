@@ -1,32 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1" language="tr">
+<TS version="2.1" language="de">
 <context>
     <name>GameBoard</name>
     <message>
         <location filename="../gameboard.cpp" line="183"/>
         <source>GAME OVER</source>
-        <translation>OYUN BİTTİ</translation>
+        <translation>SPIEL VORBEI</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="210"/>
         <source>PAUSED</source>
-        <translation>DURAKLADI</translation>
+        <translation>PAUSIERT</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="191"/>
         <source>SCORE: %1</source>
-        <translation>SKOR: %1</translation>
+        <translation>PUNKTZAHL: %1</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="198"/>
         <source>Press START to play again</source>
-        <translation>Yeniden oynamak için BAŞLA&apos;ya basın</translation>
+        <translation>START drücken, um erneut zu spielen</translation>
     </message>
     <message>
         <location filename="../gameboard.cpp" line="218"/>
         <source>Press P to resume</source>
-        <translation>Devam etmek için P&apos;ye basın</translation>
+        <translation>P drücken, um fortzusetzen</translation>
     </message>
 </context>
 <context>
@@ -34,7 +34,7 @@
     <message>
         <location filename="../mainwindow.cpp" line="27"/>
         <source>Settings</source>
-        <translation type="unfinished">Ayarlar</translation>
+        <translation type="unfinished">Einstellungen</translation>
     </message>
 </context>
 <context>
@@ -42,32 +42,32 @@
     <message>
         <location filename="../settingsdialog.cpp" line="7"/>
         <source>Settings</source>
-        <translation>Ayarlar</translation>
+        <translation>Einstellungen</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="22"/>
         <source>Gameplay</source>
-        <translation>Oynanış</translation>
+        <translation>Spielablauf</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="31"/>
         <source>Ghost piece</source>
-        <translation>Hayalet parça</translation>
+        <translation>Geisterpiece</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="32"/>
         <source>Show a preview of where the piece will land</source>
-        <translation>Parçanın nereye düşeceğini önizleme olarak göster</translation>
+        <translation>Vorschau anzeigen, wo das Piece landen wird</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="41"/>
         <source>Difficulty</source>
-        <translation>Zorluk</translation>
+        <translation>Schwierigkeit</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="45"/>
         <source>Easy</source>
-        <translation>Kolay</translation>
+        <translation>Einfach</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="46"/>
@@ -77,108 +77,108 @@
     <message>
         <location filename="../settingsdialog.cpp" line="47"/>
         <source>Hard</source>
-        <translation>Zor</translation>
+        <translation>Schwer</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="48"/>
         <source>Expert</source>
-        <translation>Uzman</translation>
+        <translation>Experte</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="61"/>
         <source>Audio</source>
-        <translation>Ses</translation>
+        <translation>Audio</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="67"/>
         <source>Music</source>
-        <translation>Müzik</translation>
+        <translation>Musik</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="76"/>
         <source>Volume</source>
-        <translation>Ses seviyesi</translation>
+        <translation>Lautstärke</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="96"/>
         <source>Cancel</source>
-        <translation>İptal</translation>
+        <translation>Abbrechen</translation>
     </message>
     <message>
         <location filename="../settingsdialog.cpp" line="97"/>
         <source>Apply</source>
-        <translation>Uygula</translation>
+        <translation>Anwenden</translation>
     </message>
 </context>
 <context>
     <name>Widget</name>
     <message>
-        <location filename="../widget.ui" line="55"/>
-        <source>TETRIS</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <location filename="../widget.ui" line="81"/>
         <source>NEXT</source>
-        <translation>SONRAKİ</translation>
+        <translation>NÄCHSTES</translation>
+    </message>
+    <message>
+        <location filename="../widget.ui" line="222"/>
+        <source>Start</source>
+        <translation>Start</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="135"/>
         <location filename="../widget.cpp" line="129"/>
         <location filename="../widget.cpp" line="189"/>
         <source>SCORE</source>
-        <translation>SKOR</translation>
+        <translation>PUNKTZAHL</translation>
+    </message>
+    <message>
+        <location filename="../widget.ui" line="55"/>
+        <source>DROPIX</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <location filename="../widget.ui" line="151"/>
         <location filename="../widget.cpp" line="142"/>
         <location filename="../widget.cpp" line="173"/>
         <source>HI-SCORE</source>
-        <translation>EN YÜKSEK</translation>
-    </message>
-    <message>
-        <location filename="../widget.ui" line="222"/>
-        <source>Start</source>
-        <translation>Başla</translation>
+        <translation>HÖCHSTPUNKTZAHL</translation>
     </message>
     <message>
         <location filename="../widget.cpp" line="180"/>
         <source>RESTART</source>
-        <translation>YENİDEN</translation>
+        <translation>NEUSTART</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="183"/>
         <location filename="../widget.cpp" line="130"/>
         <location filename="../widget.cpp" line="194"/>
         <source>LEVEL</source>
-        <translation>SEVİYE</translation>
+        <translation>STUFE</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="199"/>
         <location filename="../widget.cpp" line="131"/>
         <location filename="../widget.cpp" line="199"/>
         <source>LINES</source>
-        <translation>SATIR</translation>
+        <translation>ZEILEN</translation>
     </message>
     <message>
         <location filename="../widget.ui" line="229"/>
         <location filename="../widget.cpp" line="182"/>
         <location filename="../widget.cpp" line="220"/>
         <source>Pause</source>
-        <translation>Duraklat</translation>
+        <translation>Pause</translation>
     </message>
     <message>
         <location filename="../widget.cpp" line="215"/>
         <source>Resume</source>
-        <translation>Devam</translation>
+        <translation>Fortsetzen</translation>
     </message>
 </context>
 <context>
     <name>main</name>
     <message>
         <location filename="../main.cpp" line="23"/>
-        <source>Tetris</source>
-        <translation>Tetris</translation>
+        <source>Dropix</source>
+        <translation>Dropix</translation>
     </message>
 </context>
 </TS>

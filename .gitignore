@@ -24,8 +24,8 @@ qrc_*.cpp
 *.pyc
 *.user
 *.user.*
-Tetris
-tetris
+Dropix
+dropix
 *.pro.user*
 .qm/
 src/translations/*.qm

@@ -1,4 +1,4 @@
-Source: tetris
+Source: dropix
 Section: games
 Priority: optional
 Maintainer: Deepin en Español <developers@deepinenespanol.org>
@@ -11,10 +11,10 @@ Build-Depends: debhelper-compat (= 13),
 Standards-Version: 4.6.2
 Homepage: https://deepinenespanol.org
 
-Package: tetris
+Package: dropix
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Classic Tetris game for Deepin desktop
- A modern Tetris implementation built with Qt6 and DTK6,
+Description: Block puzzle game for Deepin desktop
+ A modern block-stacking puzzle game built with Qt6 and DTK6,
  featuring pill-shaped blocks, 8-bit music, high score tracking,
  and full internationalization support.

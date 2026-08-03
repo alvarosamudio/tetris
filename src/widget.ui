@@ -10,9 +10,9 @@
      <height>724</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string notr="true">Tetris</string>
-  </property>
+   <property name="windowTitle">
+    <string notr="true">Dropix</string>
+   </property>
   <layout class="QVBoxLayout" name="mainLayout">
    <property name="spacing">
     <number>0</number>
@@ -69,10 +69,10 @@
           <number>0</number>
          </property>
        <item>
-        <widget class="QLabel" name="titleLabel">
-         <property name="text">
-          <string>TETRIS</string>
-         </property>
+         <widget class="QLabel" name="titleLabel">
+          <property name="text">
+           <string>DROPIX</string>
+          </property>
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
